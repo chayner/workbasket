@@ -1,0 +1,13 @@
+{include file="../../templates/header.tpl.html"} 
+<div align=center><img src="/photos/album_{$albums[0].id}.jpg"><hr><font class="title">{$albums[0].title}</font>
+ 	  <br>{$albums[0].artist}
+	  <p>{$albums[0].caption}<hr>
+	  By deleting this {$cur_mod.item|lower}, you are also deleting all of the
+	  tracks associated with it. </div>
+
+<p>Are you sure that you want to delete this {$cur_mod.item|lower}?
+
+<p><a href="submit.php?id={$id}&filename={$albums[0].filename}&fileuploaded={$albums[0].fileuploaded}&action=delete">Yes, Delete this {$cur_mod.item|capitalize}</a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+
+</table>

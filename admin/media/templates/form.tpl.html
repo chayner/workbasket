@@ -1,0 +1,110 @@
+{include file="../../templates/header.tpl.html" title="media" page="media"} 
+<p><strong class="title">{$media[0].filename}</strong><br>
+
+<br>Add Item Details:
+<form enctype="multipart/form-data" method="post" action="submit.php">
+    	 
+  <table cellpadding="5">
+	<tr valign="top">
+      <td width="175">Filename:
+	  </td>
+      <td>
+	  {if $media[0].fileuploaded == "1"}
+	  	{$media[0].filename}
+		<input type="hidden" name="filename" value="{$media[0].filename}"> 
+		<input type="hidden" name="fileuploaded" value="{$media[0].fileuploaded}"> 
+	   {else}
+  	  	  <p>Select a file from the "/media" directory:
+			<br>{insert name=get_media cur_file=$media[0].filename}
+          </p>
+	   {/if}
+	  </td>
+    </tr> 
+	
+	{if $media[0].fileuploaded == "1"}
+        <tr valign="top">
+          <td>Filetype:</td>
+          <td>{$media[0].filetype}</td>
+        </tr>
+    {/if}
+	    <tr valign="top">
+          <td colspan="2"><hr></td>
+        </tr>
+    
+    <tr valign="top"> 
+          <td>Author / Artist </td>
+          <td><input name="author" type="text" id="author" value="{$media[0].author}" size=50></td>
+        </tr>
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Title: </td>
+      <td> 
+        <input type="text" name="title" size=50 value='{$media[0].title}'>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Description: </td>
+      <td> 
+        <textarea name=description cols=40 rows=4>{$media[0].description}</textarea>
+      </td>
+    </tr>
+     <tr valign="top"> 
+      <td width="175"> Copyright Information: </td>
+      <td> &copy; 
+        <input type=text name=copyright size=50 value="{$media[0].copyright}">
+      </td>
+    </tr>
+
+{if $cur_mod.imgs_p}
+<tr valign="top">
+  <td colspan="2"><hr></td>
+</tr>
+<tr valign="top"> 
+	<td width="175">Assign image to {$cur_mod.item|lower}:
+	<p><img name=picture id=picture src="{if $media[0].image_id}/photos/image_{$media[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+	<td>{insert name=image_select module=$module cur_img=$media[0].image_id}</td>
+</tr>
+{/if}
+
+{if $cur_mod.cat_p}
+<tr valign="top"> 
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+	<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+	<td>{insert name=category_select module=$module cur_cat=$media[0].category}</td>
+</tr>
+{/if}
+{if $media[0].fileuploaded == "1"}
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+      <td width="175"> 
+        <p>Update current item <br>
+          with a new file:</p>
+        {if $message == 1} <font size=2 color=red><b>The file you selected is 
+        not a valid {$cur_mod.item|lower}.</b></font> <hr>
+        {/if} </td>
+      <td> 
+        <input type=file name=uploadfile>
+        <br> <input type="hidden" name="old_filename" value="{$media[0].filename}"> 
+			<input type="hidden" name="fileuploaded" value="{$media[0].fileuploaded}"> 
+        
+			  <p>Or select a file from the "/media" directory:
+			<br>{insert name=get_media cur_file=$media[0].filename}
+          </p>
+      </td>
+    </tr>
+{/if}
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+  </table>
+     <input type="hidden" name="id" value="{$id}">
+	 <input type="hidden" name="action" value="edit">
+     <input type="submit" value="Submit {$cur_mod.item|capitalize}">
+</form>
+
+</table>

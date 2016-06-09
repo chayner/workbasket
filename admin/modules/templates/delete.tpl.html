@@ -1,0 +1,11 @@
+{include file="../../templates/header.tpl.html" title="modules" page="modules"} 
+
+<div align=left><hr><b>{$modules[0].name}</b>
+ 	  <p>{$modules[0].description}<hr></div>
+
+<p>Are you sure that you want to delete this modules item?
+
+<p><a href="submit.php?id={$id}&action=delete">Yes, Delete this modules Item</a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+
+</table>

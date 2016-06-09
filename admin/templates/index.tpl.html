@@ -1,0 +1,20 @@
+{include file="header.tpl.html"} 
+
+<table cellspacing=5>
+{assign var="lineshown" value="false"}
+{section name=i loop=$modules}
+	
+	{if $modules[i].id >= 50 && $lineshown == "false"}
+	<tr><td colspan=2><hr></td>
+	</tr>
+	{assign var="lineshown" value="true"}
+	{/if}
+	<tr><td align="right">
+	<strong>[<a href="{$admindir}{$modules[i].path}" class="title">{$modules[i].name}</a>]</strong> 
+	</td>
+	<td>{$modules[i].description|lower}
+	</td>
+	</tr>
+
+{/section}
+</table>

@@ -1,0 +1,101 @@
+{include file="../../templates/header.tpl.html"} 
+
+{if $cur_mod.add_del}<p align=center><a href=new.php><strong>add new {$cur_mod.item|lower}</strong></a></p>
+<p align=center><strong><a href="track_new.php">add track with no album</a></strong></p>
+{/if}
+
+		<table width=100% class="content" cellspacing=0 cellpadding=5>
+			<tr>
+			  <td colspan=3 bgcolor=#000000>
+			  <strong>{$cur_mod.name|lower}</strong>
+			  </td>
+			  {if $cur_mod.cat_p}
+			  <td width="150" align=right bgcolor="#000000">
+			    	{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+			  </td>
+			  {/if}
+			</tr>
+
+
+                 
+		{section name=i loop=$albums}
+			<tr>
+              <td width="5%" align=center valign=top> <a href="edit.php?id={$albums[i].id}"><font size="1">edit</font></a>
+			  {if $cur_mod.add_del}<br><font size="1"><a href="delete.php?id={$albums[i].id}">delete</a></font>{/if}</td>
+              <td width="20%" valign=top><img src="/photos/album_{$albums[i].id}_thumb.jpg">
+                <p><strong class="title">{$albums[i].title}</strong><br>
+                    <em>{$albums[i].artist}</em>
+                <p>{if $albums[i].release_date}<em><font size="1"><strong>Released: </strong>{$albums[i].release_date|date_format}
+				
+                  {/if}
+   				{if $albums[i].label}<strong><br>Label: </strong>{$albums[i].label}</font></em>{/if}
+      			{if $albums[i].copyright}<br><font size="1">&copy;{$albums[i].copyright}</font>{/if}              
+			  
+			  {if $albums[i].merch_id}<p><strong><font size="1">Store Item: </font></strong><font size="1">{$albums[i].merch_name}</font></p>
+			  {/if}
+			  
+			  </td>
+			
+			{insert name=getTracks id=$albums[i].id}
+					
+              <td width="40%" valign=top>
+			  {if $tracks}
+			  <p> <font size="1"><strong>click a track to edit it:</strong></font></p>
+
+					<p><table width="100%" class="noborder" cellpadding="2" cellspacing="0"><tr>
+					<td colspan="2"><font size="1"><strong>Name</strong></font></td>
+					<td width="30" align="center" valign="top"><font size="1"><strong>Lyrics</strong></font></td>
+					<td width="30" align="center" valign="top"><font size="1"><strong>Clip</strong></font></td>
+					</tr>
+					{section name=j loop=$tracks}
+                  		{if $tracks[j].title}
+							<tr>
+							<td><font size="1"><strong>[<a href="track_delete.php?id={$tracks[j].id}">x</a>]</strong></font></td>
+							<td><font size="1">{if $tracks[j].track}{$tracks[j].track}. {/if}<a href="track_edit.php?id={$tracks[j].id}">{$tracks[j].title}</a></font></td>
+							<td width="30" align="center" valign="top">{if $tracks[j].lyrics && $tracks[j].lyrics|strip != " "}<font size="1">L</font>{else}&nbsp;{/if}</td>
+							<td width="30" align="center" valign="top">{if $tracks[j].filename}<font size="1">C</font>{else}&nbsp;{/if}</td>
+							</tr>
+							{/if}
+			   	    {/section}
+                  </table>
+					</p>
+				{/if}
+			  <p><a href="track_new.php?album={$albums[i].id}"><strong><font size="1">add a track</font></strong></a></p></td>
+				  
+              {if $cur_mod.cat_p}<td width="25%" valign=top> <strong class="title">{$cur_mod.cat_name|capitalize}</strong><br>
+                <font size="1">{if $albums[i].category > 0} {insert name=category_name
+              id=$albums[i].category} {else} <i>No {$cur_mod.cat_name|lower} assigned</i> {/if} </font></td>{/if}
+		  </tr>
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+
+	   {insert name=getTracks id=0}
+	   {if $tracks}
+		<tr>
+		<td width="5%" align=center valign=top>&nbsp;</td>
+              <td width="20%" valign=top><strong class="title">Misc. Tracks</strong></td>
+			  <td>
+			  <p> <font size="1"><strong>click a track to edit it:</strong></font></p>
+
+					<p><table width="100%" class="noborder" cellpadding="2" cellspacing="0"><tr>
+					<td colspan="2"><font size="1"><strong>Name</strong></font></td>
+					<td width="30" align="center" valign="top"><font size="1"><strong>Lyrics</strong></font></td>
+					<td width="30" align="center" valign="top"><font size="1"><strong>Clip</strong></font></td>
+					</tr>
+					{section name=j loop=$tracks}
+							<tr>
+							<td><font size="1"><strong>[<a href="track_delete.php?id={$tracks[j].id}">x</a>]</strong></font></td>
+							<td><font size="1">{if $tracks[j].track}{$tracks[j].track}. {/if}<a href="track_edit.php?id={$tracks[j].id}">{$tracks[j].title}</a></font></td>
+							<td width="30" align="center" valign="top">{if $tracks[j].lyrics && $tracks[j].lyrics|strip != " "}<font size="1">L</font>{else}&nbsp;{/if}</td>
+							<td width="30" align="center" valign="top">{if $tracks[j].filename}<font size="1">C</font>{else}&nbsp;{/if}</td>
+							</tr>
+							
+			   	    {/section}
+                  </table>
+					</p>
+				{/if}
+			</td>
+       </tr>
+	   </table>
+{include file="../../templates/footer.tpl.html"}

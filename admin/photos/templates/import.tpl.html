@@ -1,0 +1,34 @@
+{include file="../../templates/header.tpl.html"} 
+
+<font color=#FFCC00><strong>Due to constraints of our database, you can only upload JPEG images.</strong></font> 
+<br>
+All images will be resized to fit within an {$photo_resize_width} x {$photo_resize_height} pixel area.
+      <hr><p><b>All files must be uploaded to the "/toimport" directory of the web server.</b></p>
+	{if $filelist}
+		<p><font color=#FFCC00><strong>The following files will be imported:</strong></font></p>
+		{section name=i loop=$filelist}
+			{$filelist[i].filename}<br>
+		{/section}
+	{else}
+		<p><font color=#FFCC00><strong>There are currently no files in the "/toimport" directory.  Nothing will be imported.</strong></font></p>
+	{/if}
+	  
+<form method="post" enctype="multipart/form-data" action="import_action.php" onSubmit="this.elements['submit'].disabled='disabled';">
+<p><input name="caption_p" type="checkbox" value="1"> Set caption to filename (without file extension)</p>
+{if $cur_mod.cat_p}
+	<table>
+		<tr>
+			<td>
+			<strong>Select a category that all imported photos should be assigned to.</strong>
+			<br>{if $cat}{insert name=category_select module=$module cur_cat=$cat}{else}{insert name=category_select module=$module cur_cat=$photos[0].category}{/if}
+			</td>
+		</tr>
+	 </table>
+{/if}
+  <p>
+<p> 
+    <input type="hidden" name="action" value="import">
+    <input type="submit" name="submit" value="import images in /toimport directory">
+</form>
+
+</table>

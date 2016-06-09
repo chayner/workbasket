@@ -1,0 +1,31 @@
+<table width=100% class="content" style='margin: 4px;' cellpadding=5 cellspacing=0>
+  <tr bgcolor=#999999> 
+    <td colspan=4><font color="#000000"><strong>{$expand_fill} {$sections[0].name}</strong></font></td>
+	</tr>
+  <tr valign=top> 
+    <td width="5%" align="center"> <font size="1"><a href=edit.php?id={$sections[0].id}>edit</a><br>
+        <a href=delete.php?id={$sections[0].id}>delete</a></font></td>
+    <td width="10%"><img src=/photos/section_{$sections[0].id}_thumb.jpg></td>
+    <td>
+	{if $sections[0].director}	  <span class=title>Director:</span><br>
+	  <font size="1">{$sections[0].director}</font><br>
+	{/if}
+    {if $sections[0].director_phone}
+		<span class="title">Contact Number:</span><br>
+   	  <font size="1">{$sections[0].director_phone}</font><br>
+	{/if}
+	{if $sections[0].director_email}
+		<span class="title">Contact Email:</span><br>
+	  <font size="1">{$sections[0].director_email}</font><br>
+	{/if}
+	{if $sections[0].description}
+		<hr><span class="title">Description: </span><br>
+	  <font size="1">{$sections[0].description|strip_tags|truncate:250}</font>
+	{/if}
+	{if $sections[0].link}
+      <hr><span class="title">External Link:</span><br>
+        {$sections[0].link}<p>
+      {/if}&nbsp;
+	</td>
+  </tr>
+            </table>

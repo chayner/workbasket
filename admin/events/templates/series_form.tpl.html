@@ -1,0 +1,430 @@
+{include file="../../templates/header.tpl.html" title="events" page="events"} 
+
+{literal}
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+// of course, this doesn't yet address variable (id) named form fields ... but that's only an issue on modify/validate forms
+function CleanupDaily() {
+	for (var i=0; i < 4; i++) {
+		document.event_item.daily[i].checked = false;
+	}
+}
+function CleanupMW() {
+	for (var i=0; i < 2; i++) {
+		document.event_item.month_or_week[i].checked = false;
+	}
+}
+function CheckRecurring(index) {
+	document.event_item.rectype[index].checked = true;
+	if (index < 3) {
+		CleanupDaily();
+		CleanupMW();
+	} else if (index == 3) {
+		CleanupMW();
+	} else if (index == 4) {
+		CleanupDaily();
+	}
+}
+function CheckSubDaily() {
+	document.event_item.daily[0].checked = true;	// check the parent radio
+	CleanupMW();
+}
+function CheckSubDOW() {
+	document.event_item.rectype[3].checked = true;	// check the 'daily' parent radio
+	document.event_item.daily[3].checked = true;	// check the 'one or more days each week' radio
+	CleanupMW();
+}
+function CheckSubWeek() {
+	document.event_item.rectype[4].checked = true;	// check the 'week' parent radio
+	CleanupMW();
+}
+function CheckSubMW() {
+	document.event_item.month_or_week[0].checked = true;	// check the parent radio
+	CleanupDaily();
+}
+
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+var day, month, year, day_week, flag = true;
+
+/* derived from DayWeek ver 1.1 written by Steve Clare, Unitron Technical Books. 18/03/00.
+   This program is Freeware.  If you find any bugs or have any comments,
+   please e-mail Steve at sales@unitronbooks.4all.cc */
+
+function test_input_data(day, month, year) {
+
+	switch(day) {
+		case 29 : // tests for leap years
+		  if(month == 2) { // only applies to February
+		    if(((year / 4) - Math.floor(year / 4)) == 0) { // year divisible by 4
+		      if(((year / 100) - Math.floor(year / 100)) == 0) { // year div by 100
+			if(((year / 400) - Math.floor(year / 400)) == 0) { // year div by 400
+			  break; 
+			} // year div by 400 so is a leap year
+			else {
+			  alert('That is not a leap year');
+			  flag = false;
+			  return flag;
+			} // year div by 4 and 100 but not 400 so can't be a leap year
+		       }
+		       else { // year div by 4 but not by 100 so is a leap year
+			 break;
+		       }
+		    }
+		    else { // year not div by 4 so can't be a leap year
+		      alert('That is not a leap year');
+		      flag = false;
+		      return flag;
+		    }
+		  }
+		  else { // not February
+	 	    break;
+		  }
+		  
+		case 30 :
+		  if(month == 2) {
+		    days_in_a_month();
+		    flag = false;
+		    return flag;
+		  }
+		  else {
+		    break;
+		  }
+
+		case 31 :
+		  if((month == 2)||(month == 4)||(month == 6)||(month == 9)||(month == 11)) {
+		    days_in_a_month();
+		    flag = false;
+		    return flag;
+		  }
+		   else {
+		    break;
+		  }
+	}
+}
+
+function days_in_a_month() {
+	var m1 = "April, June, September, and November have 30 days.\n";
+	var m2 = "All the rest have 31, except February, which has\n";
+	var m3 = "28 days (29 in each leap year)";
+
+	alert(m1 + m2 + m3);
+	return;
+}  
+
+function day_of_the_week(day, month, year) {
+	var m, y, c, dd; 	// parameters used in the calculations
+
+	var month_array = new Array(1, 4, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5);
+	m = month_array[month-1];
+
+	if((month == 1)||(month == 2)) {
+		year = year - 1;
+	}
+	
+	y = (5 * (Math.floor((year % 100) / 4)) + year % 4)%7;
+	c = (5 * ((Math.floor(year / 100)) % 4))%7;
+	dd = (m + day + c + y)%7;
+		
+	var day_array = new Array("Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
+	day_week = day_array[dd];
+
+	return day_week;
+}	 	
+
+function day_of_week(year, month, day, day_name) {
+	year = year*1;
+	month = month*1;
+	day = day*1;
+
+	test_input_data(day, month, year);
+	if(flag == false) {
+	  flag = true;
+	  return;
+	}
+	else {
+		day_of_the_week(day, month, year);
+	}
+
+	document.event_item[day_name].value = day_week;
+
+}
+
+function recur_change() {
+	if (recur_td.disabled == true) {
+		recur_td.disabled=false;
+	} else {
+		recur_td.disabled=true;
+	}
+}
+
+// -->
+</SCRIPT>
+{/literal}
+
+<form name=admin_item enctype="multipart/form-data" method=post action=submit.php>
+  <table width=600 border=0 cellspacing=0 cellpadding=10>
+		<tr valign="top">
+		  <td><input type="checkbox" name="structure_change" value="1" {if $action == "series_add"}checked{/if} onClick="recur_change();">	        </td>
+          <td colspan="2">Check the box to make changes to the structure of the
+            series</td>
+    </tr>
+		<tr valign="top" id=recur_td {if $action != "series_add"}disabled{/if}>
+		  <td>&nbsp;		</td>
+		  <td colspan="2">            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" valign="top">
+        <table width="100%" cellpadding="5" cellspacing="2" border="0">
+          <tr>
+				  
+          <td align="right" bgcolor="#999999"><font size="1"><b>First  Date<br>
+            of
+                  Event </b></font></td>
+            <td colspan="2"><select name="fmonth" size="1" id="fmonth" onChange="day_of_week(this.form.fyear.options[this.form.fyear.selectedIndex].value, this.form.fmonth.options[this.form.fmonth.selectedIndex].value, this.form.fday.options[this.form.fday.selectedIndex].value, 'day_name')">
+                <option value="1" {if $series[0].fmonth == 1}selected{elseif $current_date.mon == 1}selected{/if}>January</option>
+                <option value="2" {if $series[0].fmonth == 2}selected{elseif $current_date.mon == 2}selected{/if}>February</option>
+                <option value="3" {if $series[0].fmonth == 3}selected{elseif $current_date.mon == 3}selected{/if}>March</option>
+                <option value="4" {if $series[0].fmonth == 4}selected{elseif $current_date.mon == 4}selected{/if}>April</option>
+                <option value="5" {if $series[0].fmonth == 5}selected{elseif $current_date.mon == 5}selected{/if}>May</option>
+                <option value="6" {if $series[0].fmonth == 6}selected{elseif $current_date.mon == 6}selected{/if}>June</option>
+                <option value="7" {if $series[0].fmonth == 7}selected{elseif $current_date.mon == 7}selected{/if}>July</option>
+                <option value="8" {if $series[0].fmonth == 8}selected{elseif $current_date.mon == 8}selected{/if}>August</option>
+                <option value="9" {if $series[0].fmonth == 9}selected{elseif $current_date.mon == 9}selected{/if}>September</option>
+                <option value="10" {if $series[0].fmonth == 10}selected{elseif $current_date.mon == 10}selected{/if}>October</option>
+                <option value="11" {if $series[0].fmonth == 11}selected{elseif $current_date.mon == 11}selected{/if}>November</option>
+                <option value="12" {if $series[0].fmonth == 12}selected{elseif $current_date.mon == 12}selected{/if}>December</option>
+              </select>
+                <select name="fday" size="1" id="fday" onChange="day_of_week(this.form.fyear.options[this.form.fyear.selectedIndex].value, this.form.fmonth.options[this.form.fmonth.selectedIndex].value, this.form.fday.options[this.form.fday.selectedIndex].value, 'day_name')">
+                  <option value="1" {if $series[0].fday == 1}selected{elseif $current_date.mday == 1}selected{/if}>1</option>
+				  <option value="2" {if $series[0].fday == 2}selected{elseif $current_date.mday == 2}selected{/if}>2</option>
+				  <option value="3" {if $series[0].fday == 3}selected{elseif $current_date.mday == 3}selected{/if}>3</option>
+				  <option value="4" {if $series[0].fday == 4}selected{elseif $current_date.mday == 4}selected{/if}>4</option>
+				  <option value="5" {if $series[0].fday == 5}selected{elseif $current_date.mday == 5}selected{/if}>5</option>
+				  <option value="6" {if $series[0].fday == 6}selected{elseif $current_date.mday == 6}selected{/if}>6</option>
+				  <option value="7" {if $series[0].fday == 7}selected{elseif $current_date.mday == 7}selected{/if}>7</option>
+				  <option value="8" {if $series[0].fday == 8}selected{elseif $current_date.mday == 8}selected{/if}>8</option>
+				  <option value="9" {if $series[0].fday == 9}selected{elseif $current_date.mday == 9}selected{/if}>9</option>
+				  <option value="10" {if $series[0].fday == 10}selected{elseif $current_date.mday == 10}selected{/if}>10</option>
+				  <option value="11" {if $series[0].fday == 11}selected{elseif $current_date.mday == 11}selected{/if}>11</option>
+				  <option value="12" {if $series[0].fday == 12}selected{elseif $current_date.mday == 12}selected{/if}>12</option>
+				  <option value="13" {if $series[0].fday == 13}selected{elseif $current_date.mday == 13}selected{/if}>13</option>
+				  <option value="14" {if $series[0].fday == 14}selected{elseif $current_date.mday == 14}selected{/if}>14</option>
+				  <option value="15" {if $series[0].fday == 15}selected{elseif $current_date.mday == 15}selected{/if}>15</option>
+				  <option value="16" {if $series[0].fday == 16}selected{elseif $current_date.mday == 16}selected{/if}>16</option>
+				  <option value="17" {if $series[0].fday == 17}selected{elseif $current_date.mday == 17}selected{/if}>17</option>
+				  <option value="18" {if $series[0].fday == 18}selected{elseif $current_date.mday == 18}selected{/if}>18</option>
+				  <option value="19" {if $series[0].fday == 19}selected{elseif $current_date.mday == 19}selected{/if}>19</option>
+				  <option value="20" {if $series[0].fday == 20}selected{elseif $current_date.mday == 20}selected{/if}>20</option>
+				  <option value="21" {if $series[0].fday == 21}selected{elseif $current_date.mday == 21}selected{/if}>21</option>
+				  <option value="22" {if $series[0].fday == 22}selected{elseif $current_date.mday == 22}selected{/if}>22</option>
+				  <option value="23" {if $series[0].fday == 23}selected{elseif $current_date.mday == 23}selected{/if}>23</option>
+				  <option value="24" {if $series[0].fday == 24}selected{elseif $current_date.mday == 24}selected{/if}>24</option>
+				  <option value="25" {if $series[0].fday == 25}selected{elseif $current_date.mday == 25}selected{/if}>25</option>
+				  <option value="26" {if $series[0].fday == 26}selected{elseif $current_date.mday == 26}selected{/if}>26</option>
+				  <option value="27" {if $series[0].fday == 27}selected{elseif $current_date.mday == 27}selected{/if}>27</option>
+				  <option value="28" {if $series[0].fday == 28}selected{elseif $current_date.mday == 28}selected{/if}>28</option>
+				  <option value="29" {if $series[0].fday == 29}selected{elseif $current_date.mday == 29}selected{/if}>29</option>
+				  <option value="30" {if $series[0].fday == 30}selected{elseif $current_date.mday == 30}selected{/if}>30</option>
+				  <option value="31" {if $series[0].fday == 31}selected{elseif $current_date.mday == 31}selected{/if}>31</option>
+                </select>
+                <select name="fyear" size="1" id="fyear" onChange="day_of_week(this.form.fyear.options[this.form.fyear.selectedIndex].value, this.form.fmonth.options[this.form.fmonth.selectedIndex].value, this.form.fday.options[this.form.fday.selectedIndex].value, 'day_name')">
+                  <option value="2004" {if $series[0].fyear == 2004}selected{elseif $current_date.year == 2004}selected{/if}>2004</option>
+                  <option value="2005" {if $series[0].fyear == 2005}selected{elseif $current_date.year == 2005}selected{/if}>2005</option>
+                  <option value="2006" {if $series[0].fyear == 2006}selected{elseif $current_date.year == 2006}selected{/if}>2006</option>
+                  <option value="2007" {if $series[0].fyear == 2007}selected{elseif $current_date.year == 2007}selected{/if}>2007</option>
+                  <option value="2008" {if $series[0].fyear == 2008}selected{elseif $current_date.year == 2008}selected{/if}>2008</option>
+                </select>
+                <input type="text" name="day_name" value="{if !$series[0].fday}{$current_date.weekday}{/if}" size="10"></td>
+          </tr>
+          <tr>
+            <td align="right" valign="top" bgcolor="#999999"> <font size="1"><b>Recurring<br>
+              Frequency</b> </font></td>
+            <td valign="top" nowrap colspan="2">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="top" nowrap><input type="radio" name="rectype" value="one_time" {if $series[0].rectype == "one_time" || !$series[0].rectype}checked{/if} onClick="javascript:CheckRecurring('0')"></td>
+                  <td align="left" valign="top" nowrap> <b>One time only</b></td>
+                </tr>
+                <tr>
+                  <td valign="top" nowrap><input type="radio" name="rectype" value="yearly" {if $series[0].rectype == "yearly"}checked{/if} onClick="javascript:CheckRecurring('1')"></td>
+                  <td align="left" valign="top" nowrap> <b>Annual</b> (same month & day)</td>
+                </tr>
+                <tr>
+                  <td valign="top" nowrap><input type="radio" name="rectype" value="monthly" {if $series[0].rectype == "monthly"}checked{/if} onClick="javascript:CheckRecurring('2')"></td>
+                  <td align="left" valign="top" nowrap> <b>Monthly</b> (same day
+                    of month)</td>
+                </tr>
+                <tr>
+                  <td valign="top" nowrap><input type="radio" name="rectype" value="daily" {if $series[0].rectype == "daily"}checked{/if} onClick="javascript:CheckSubDaily()"></td>
+                  <td align="left" valign="top" nowrap> <b>Daily</b>:<br>
+                                          <input type="radio" name="daily" value="all_days" {if $series[0].daily == all_days}checked{/if} onClick="javascript:CheckRecurring('3')">
+                    All Days<br>
+                    <input type="radio" name="daily" value="weekdays" {if $series[0].daily == weekdays}checked{/if} onClick="javascript:CheckRecurring('3')">
+                    Weekdays only (M - F)<br>
+                    <input type="radio" name="daily" value="weekends" {if $series[0].daily == weekends}checked{/if} onClick="javascript:CheckRecurring('3')">
+                    Weekends only (Sat & Sun)</td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top" nowrap><input type="radio" name="rectype" value="weekly" {if $series[0].rectype == "weekly"}checked{/if}></td>
+                  <td align="left" valign="top" nowrap><p><strong>Weekly:</strong><br>
+                      One or more days each week:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="dow[]" value="0" {if $dow[0] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  Su
+  <input type="checkbox" name="dow[]" value="1" {if $dow[1] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  M
+  <input type="checkbox" name="dow[]" value="2" {if $dow[2] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  Tu
+  <input type="checkbox" name="dow[]" value="3" {if $dow[3] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  W
+  <input type="checkbox" name="dow[]" value="4" {if $dow[4] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  Th
+  <input type="checkbox" name="dow[]" value="5" {if $dow[5] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  F
+  <input type="checkbox" name="dow[]" value="6" {if $dow[6] == "1"}checked{/if} onClick="javascript:CheckSubWeek()">
+  Sa                </p>                  </td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top" nowrap>
+                    <input type="radio" name="rectype" value="same_day" {if $series[0].rectype == "same_day"}checked{/if} onClick="javascript:CheckSubMW()"></td>
+                  <td align="left" valign="top" nowrap> <b>Same Day of each Week</b> (select
+                    an option below):<br>
+                                              <input type="radio" name="month_or_week" value="m" {if $series[0].month_or_week == m}checked{/if} onClick="javascript:CheckRecurring('5')">
+                                              <SELECT TYPE="TEXT" NAME="wom">
+                                                <OPTION>--- 
+                                                <OPTION VALUE="1" {if $series[0].wom == 1}selected{/if}>First
+                                                <OPTION VALUE="2" {if $series[0].wom == 2}selected{/if}>Second
+                                                <OPTION VALUE="3" {if $series[0].wom == 3}selected{/if}>Third
+                                                <OPTION VALUE="4" {if $series[0].wom == 4}selected{/if}>Fourth
+                                                <OPTION VALUE="5" {if $series[0].wom == 5}selected{/if}>Fifth
+                                              </SELECT>
+                    Week of every
+                    <input type="text" name="m_increment" value="{$series[0].m_increment}" size="2" maxlength="2">
+                    month(s)<br>
+                    <input type="radio" name="month_or_week" value="w" {if $series[0].month_or_week == w}checked{/if} onClick="javascript:CheckRecurring('5')">
+                    every
+                    <input type="text" name="w_increment" value="{$series[0].w_increment}" size="2" maxlength="2">
+                    week(s) </td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td align="right" valign="top" bgcolor="#999999"> <font size="1"><b>Times to Repeat</b> </font></td>
+            <td colspan="2">
+              <input type="text" name="recurring_period" value="{if $series[0].recurring_period}{$series[0].recurring_period}{else}1{/if}" size="3" maxlength="3">
+              (# of Recurring entries, i.e. <b>12</b> months, <b>1</b> year, or <b>4</b> days)</td>
+          </tr>
+      </table></td>
+    </tr>
+            </table></td>
+	    </tr>
+		<tr valign="top">
+          <td colspan="3"><hr></td>
+    </tr>
+		<tr valign=top>
+          <td colspan="3"><font class="feedback">To make a change to all of the
+              items in the series, check the box next to the appropriate field.
+              Items not checked will not be modified. </font></td>
+    </tr>
+		<tr valign=top>
+          <td><input name="title_p" type="checkbox" id="title_p" value="1" {if $events[0].title}checked{/if}></td>
+          <td>{$cur_mod.item|capitalize} Title:</td>
+          <td>
+            <input name=title type=text id=title size=35 value="{$events[0].title}" onChange="title_p.checked=true;">
+          </td>
+    </tr>
+    <tr valign=top>
+      <td colspan="3"><hr></td>
+    </tr>
+	    <tr valign=top>
+	      <td><input name="btime_p" type="checkbox" id="btime_p" value="1" {if $events[0].btime}checked{/if}></td> 
+      <td>{$cur_mod.item|capitalize} Beginning Time:</td>
+      <td> <input name=btime type=text id=btime size=18 value="{$events[0].btime|date_format:'%I:%M %p'}" onChange="btime_p.checked=true;"> 
+      </td>
+    </tr>
+    <tr valign=top>
+      <td><input name="body_p" type="checkbox" id="body_p" value="1" {if $events[0].body}checked{/if}></td> 
+      <td><p>Description of the {$cur_mod.item|capitalize}:</p></td>
+      <td><textarea name=body cols=40 rows=10>{$events[0].body}</textarea>
+	  <script language="JavaScript1.2" defer>
+		editor_generate('body');
+	   </script>
+	   </td>
+    </tr>
+    <tr valign=top>
+      <td><input name="cost_p" type="checkbox" id="cost_p" value="1" {if $events[0].cost}checked{/if}></td> 
+      <td>Cost:</td>
+      <td><input name=cost type=text size=18 maxlength=32 value="{$events[0].cost}" onChange="cost_p.checked=true;"></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="url_p" type="checkbox" id="url_p" value="1" {if $events[0].url}checked{/if}></td>
+      <td>URL:</td>
+      <td><input name=url type=text size=35 value="{$events[0].url}" onChange="url_p.checked=true;"></td>
+    </tr>
+    <tr valign="top"> 
+      <td colspan=3><hr></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="cname_p" type="checkbox" id="cname_p" value="1" {if $events[0].contact_name}checked{/if}></td> 
+      <td>Contact Name:</td>
+      <td><input name=contact_name type=text id=contact_name size=35 value="{$events[0].contact_name}" onChange="cname_p.checked=true;"></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="cemail_p" type="checkbox" id="cemail_p" value="1" {if $events[0].contact_email}checked{/if}></td> 
+      <td>Contact E-mail:</td>
+      <td><input name=contact_email type=text id=contact_email size=35 value="{$events[0].contact_email}" onChange="cemail_p.checked=true;"></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="cphone_p" type="checkbox" id="cphone_p" value="1" {if $events[0].contact_phone}checked{/if}></td> 
+      <td>Contact Phone:</td>
+      <td><input name=contact_phone type=text id=contact_phone size=35 value="{$events[0].contact_phone}" onChange="cphone_p.checked=true;"></td>
+    </tr>
+    <tr valign="top"> 
+      <td colspan=3><hr></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="lname_p" type="checkbox" id="lname_p" value="1" {if $events[0].loc_name}checked{/if}></td> 
+      <td>Location Name:</td>
+      <td><input name=loc_name type=text id=loc_name size=35 value="{$events[0].loc_name}" onChange="lname_p.checked=true;"></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="ladd_p" type="checkbox" id="ladd_p" value="1" {if $events[0].loc_address}checked{/if}></td> 
+      <td>Location Address:</td>
+      <td><input name=loc_address type=text id=loc_address size=35 value="{$events[0].loc_address}" onChange="ladd_p.checked=true;"></td>
+    </tr>
+    <tr valign=top>
+      <td><input name="ladd2_p" type="checkbox" id="ladd2_p" value="1" {if $events[0].loc_address2}checked{/if}></td> 
+      <td>Location Address (Line 2):</td>
+      <td><input name=loc_address2 type=text id=loc_address2 size=35 value="{$events[0].loc_address2}" onChange="ladd2_p.checked=true;"></td>
+    </tr>
+	{if $cur_mod.imgs_p}
+    <tr valign=top>
+      <td><input name="image_p" type="checkbox" id="image_p" value="1" {if $events[0].image_id}checked{/if}></td>
+      <td>Assign image to {$cur_mod.item|lower}:
+          <p><img name=picture src="{if $events[0].image_id}/photos/image_{$events[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+      <td>{insert name=image_select module=$module cur_img=$events[0].image_id}</td>
+    </tr>
+	{/if}
+	{if $cur_mod.cat_p}
+    <tr valign=top>
+      <td><input name="category_p" type="checkbox" id="category_p" value="1" {if $events[0].category}checked{/if}></td>
+      <td>Category</td>
+	  <td>{insert name=category_select module=$module cur_cat=$events[0].category}</td>
+    </tr>
+	{/if}
+    <tr valign=top>
+      <td>&nbsp;</td> 
+      <td colspan="2"> <input type=hidden name=action value='{$action}'>
+	  <input type="hidden" name="id" value="{$events[0].id}"> 
+	  <input type="hidden" name="event_id" value="{$event_id}">
+	  <input type="hidden" name="series_id" value="{$series_id}">
+        <input type=submit name=Submit value='Submit Series'> </td>
+    </tr>
+  </table>
+</form>
+
+</table>

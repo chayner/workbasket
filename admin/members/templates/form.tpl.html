@@ -1,0 +1,194 @@
+{include file="../../templates/header.tpl.html"} 
+<form name=member_edit enctype="multipart/form-data" method="post" action="submit.php">
+  <table border=0 cellspacing=0 cellpadding=10>
+    <tr align="center" valign=top>
+      <td colspan="2"><img src="/photos/member_{$members[0].id}.jpg"></td>
+    </tr>
+		{if $member_pass}
+	<tr valign="top">
+    	<td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+    	<td>User Name:</td>
+    	<td><input name=user_name type=text id="user_name" value="{$members[0].user_name}" size=50></td>
+    </tr>
+	<tr valign="top">
+		<td>Password:</td>
+		<td><p>{if $members[0].password}<em><strong>Password is  hidden</strong></em></p>
+		  <p><em><font size="1">  To change password, enter in new password below:</font></em><br>
+	      {/if}
+            <input type="text" name="password" id="password" value="" size="35">
+	        </p></td>
+	</tr>
+	<tr valign="top">
+    	<td colspan="2"><hr></td>
+    </tr>
+	{/if}
+    <tr valign=top>
+      <td>Title:</td>
+      <td><input name=member_title type=text id="member_title" value="{$members[0].title}" size=15></td>
+    </tr>
+	<tr valign=top> 
+      <td>First Name:</td>
+      <td> 
+        <input name=fname type=text id="fname" value="{$members[0].fname}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top>
+      <td>Last Name:</td>
+      <td>
+        <input name=lname type=text id="lname" value="{$members[0].lname}" size=35>
+      </td>
+    </tr>
+	<tr valign=top>
+      <td>Suffix:</td>
+      <td><input name=suffix type=text id="suffix" value="{$members[0].suffix}" size=15></td>
+    </tr>
+    <tr valign=top> 
+      <td>Address (line 1):</td>
+      <td> 
+        <input name=address1 type=text id="address1" value="{$members[0].address1}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>Address (line 2):</td>
+      <td> 
+        <input name=address2 type=text id="address2" value="{$members[0].address2}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>City:</td>
+      <td> 
+        <input name=city type=text id="city" value="{$members[0].city}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>State:</td>
+      <td> 
+        <input name=state type=text id="state" value="{$members[0].state}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>Zip:</td>
+      <td> 
+        <input name=zip type=text id="zip" value="{$members[0].zip}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td colspan="2"> 
+        <hr></td>
+    </tr>
+    <tr valign=top> 
+      <td>Phone:</td>
+      <td> 
+        <input name=phone type=text id="phone" value="{$members[0].phone}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>Fax:</td>
+      <td> 
+        <input name=fax type=text id="fax" value="{$members[0].fax}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>E-mail:</td>
+      <td> 
+        <input name=email type=text id="email" value="{$members[0].email}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>URL of the {$cur_mod.item|capitalize}: <br> <i><font size="-1">URL needs 
+        to include 'http://'</font></i></td>
+      <td> 
+        <input type=text name=url size=35 value="{$members[0].url}"> </td>
+    </tr>
+   {if $custom_txt} 
+    <tr valign="top"> 
+      <td colspan="2"> 
+        <hr></td>
+    </tr>
+	{/if}
+	
+	{if $custom_txt[0]}
+    <tr valign=top>
+      <td>{$custom_txt[0]}:</td>
+      <td><input name="custom1" type=text id="custom1" value="{$members[0].custom1}" size=35></td>
+    </tr>
+	{/if}
+	
+	{if $custom_txt[1]}
+    <tr valign=top>
+      <td>{$custom_txt[1]}:</td>
+      <td><input name="custom2" type=text id="custom2" value="{$members[0].custom2}" size=35></td>
+    </tr>
+	{/if}
+	
+	{if $custom_txt[2]}
+    <tr valign=top>
+      <td>{$custom_txt[2]}:</td>
+      <td><input name="custom3" type=text id="custom3" value="{$members[0].custom3}" size=35></td>
+    </tr>
+	{/if}	
+	
+	{if $custom_txt[3]}
+    <tr valign=top>
+      <td>{$custom_txt[3]}:</td>
+      <td><input name="custom4" type=text id="custom4" value="{$members[0].custom4}" size=35></td>
+    </tr>
+	{/if}	
+	
+	{if $custom_txt[4]}
+    <tr valign=top>
+      <td>{$custom_txt[4]}:</td>
+      <td><input name="custom5" type=text id="custom5" value="{$members[0].custom5}" size=35></td>
+    </tr>
+	{/if}	
+	
+	{if $custom_txt[5]}
+    <tr valign=top>
+      <td>{$custom_txt[5]}:</td>
+      <td><input name="custom6" type=text id="custom6" value="{$members[0].custom6}" size=35></td>
+    </tr>
+	{/if}	
+	<tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+      <td>Biography:</td>
+      <td> 
+        <textarea name="bio" cols="40" rows="8" id="bio">{$members[0].bio}</textarea>
+</td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="top"><hr></td>
+    </tr>
+    <tr>
+      <td valign="top">
+        <p>Photo:</p><p><img src="/photos/member_{$members[0].id}_thumb.jpg" height="50"></p>
+        {if $message == 1} <font size=2 color=red><b>The file you selected is
+        not a valid {$cur_mod.item|lower}.</b></font>
+        <hr>
+    {/if} </td>
+      <td valign="top"> Add new image:<br>
+          <input type="file" name="source_file">
+          <INPUT TYPE=hidden name=MAX_FILE_SIZE value=20000000>
+          <br>
+          <br>
+          <input name="rem_curimg" type="checkbox" id="rem_curimg2" value="1">
+    Check to remove current photo
+      </td>
+    </tr>
+	{if $cur_mod.cat_p}
+    <tr>
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr> 
+      <td>Category:</td>
+      <td>{insert name=category_select module=$module cur_cat=$members[0].category} 
+      </td>
+    </tr>
+	{/if}
+    <tr align="center" valign=top> 
+      <td colspan="2"> <input type=hidden name=action value="{$action}"> <input type=hidden name=id value="{$members[0].id}"> 
+        <input type=submit name=Submit value='{$action} {$cur_mod.item|lower}'> 
+      </td>
+    </tr>
+  </table>
+  <p align="left"></table>
+  </p>
+</form>
+

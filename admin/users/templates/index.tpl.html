@@ -1,0 +1,37 @@
+{include file="../../templates/header.tpl.html"} 
+<p align=center>
+        <b><a href=new.php>add a new {$cur_mod.item}</a></b></p>
+        
+		<p><a href="mailto:{section name=j loop=$user_list}{$user_list[j].email};{/section}">email all admins</a></p>
+<table width=100% class="content" cellpadding=5 cellspacing=0>
+  <tr> 
+    <td colspan=6 bgcolor=#000000> <b>{$cur_mod.name}</b> </td>
+  </tr>
+  <tr bgcolor=#999999> 
+    <td> 
+      <div align=center>&nbsp;</div></td>
+    <td> 
+      <div align=center><b> <a href="{$thispage}?ord=id">id</a></b></div></td>
+    <td><b><a href="{$thispage}?ord=user_name">user name</a></b></td>
+    <td><b><a href="{$thispage}?ord=real_name">real name</a></b></td>
+    <td><strong><a href="{$thispage}?ord=email">email</a></strong></td>
+    <td><b><a href="{$thispage}?ord=login">last login</a></b></td>
+  </tr>
+  {section name=i loop=$user_list} 
+  <tr valign="top"> 
+    <td width="5%"> 
+      <div align=center> 
+        <p><a href=edit.php?id={$user_list[i].id}><font size="1">edit</font></a><font size="1"><br>
+            <a href=delete.php?id={$user_list[i].id}>delete</a></font></p>
+    </div></td>
+    <td width="5%"> 
+    <p align=center>{$user_list[i].id}</p></td>
+    <td width="15%">{$user_list[i].user_name}</td>
+    <td width="30%">{$user_list[i].real_name}</td>
+    <td width="30%">{$user_list[i].email}</td>
+    <td width="15%">{$user_list[i].last_login|date_format:'%b %d, %Y <br> %l:%M %p'}</td>
+  </tr>
+  {/section} 
+</table>
+
+{include file="../../templates/footer.tpl.html"}

@@ -1,0 +1,49 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+        <table width=100% class="content" cellspacing=0 cellpadding=5>
+        <tr>
+           <td colspan=2 bgcolor=#000000>
+              <b>{$cur_mod.name|lower}</b>
+           </td>
+           {if $cur_mod.cat_p}
+				<td align=right bgcolor="#000000">
+					{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+				</td>
+			{/if}
+
+        </tr>
+
+{section name=i loop=$news}
+
+		<tr valign=top>
+                <td width=5% align=center>                  <p><font size=1><a href=edit.php?id={$news[i].id}>edit</a></font>
+          <br><font size=1><a href=delete.php?id={$news[i].id}>delete</a></font></p>          </td>
+                <td width="70%">
+                    <p><b><font size=2 class="title">{$news[i].title}</font></b>
+                    <br><font size=1><i>({$news[i].date})</i></font></p>
+					{if $news[i].url}<p><font size="1"><strong>External URL:</strong><br>
+				    <a href="{$news[i].url}" target="_blank">{$news[i].url}</a></font></p>
+					{/if}
+          		<p>{if $news[i].image_id && $cur_mod.imgs_p}<img src="/photos/image_{$news[i].image_id}_thumb.jpg" align="left">{/if}<font size=2>{$news[i].body|strip_tags|truncate:400}</font></p>          </td>
+			    {if $cur_mod.cat_p}
+				<td width=25% valign="top">
+					<strong class="title">Category:</strong>
+					<br><font size="1">
+					{if $news[i].category > 0}
+						{insert name=category_name modid=$module id=$news[i].category}
+					{else}
+						<i>No Category Assigned</i>
+					{/if}
+					</font>
+				</td>
+				{/if}
+		</tr>
+	{sectionelse}
+        <tr><td colspan=3><p>There are no items to display.</p></td></tr>
+	{/section}
+
+</table>
+
+{include file="../../templates/footer.tpl.html"}

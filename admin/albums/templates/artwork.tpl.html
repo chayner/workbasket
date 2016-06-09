@@ -1,0 +1,19 @@
+<table cellpadding=5 cellspacing=0 border=0 bordercolor="#000000">
+
+
+<tr>
+{section name=i loop=$artwork}
+
+
+	{math equation="x % 3" x=$smarty.section.i.iteration assign="CurMod"}
+
+ 	<td valign="top"><img src="/photos/{$artwork[i].id}_thumb.jpg"><br>Photo ID: {$artwork[i].id}</td>
+
+	{if $CurMod == 0}
+	</tr><tr>
+	{/if}
+	
+{/section}
+        
+</tr>
+</table>

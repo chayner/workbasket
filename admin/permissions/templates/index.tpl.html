@@ -1,0 +1,70 @@
+{include file="../../templates/header.tpl.html"} 
+        
+<form method="post" action="submit.php" name="addpermission">
+  <table width=600 border=0 cellspacing=0 cellpadding=5>
+  <tr>
+   <td width=150>
+   		{insert name=get_user_dropdown}
+	</td>
+    <td width=150>
+      	{insert name=get_section_dropdown}
+	</td>
+    <td width=150>
+     	{insert name=get_module_dropdown}
+	</td>
+    <td width=150>
+      <input type=hidden name=action value=add>
+      <input type=submit name=Submit value='Add Permission'>
+    </td>
+  </tr>
+</table>
+</form>
+
+{section name=j loop=$permissions}
+{if $permissions[j].user_id != $curuser}
+	{if !$smarty.section.j.first}</table>{/if}
+	{assign var=curuser value=$permissions[j].user_id}
+	{assign var=cursect value=0}
+	{assign var=modtype value=0}
+	 <table width=80% class="content" cellspacing=0 cellpadding=5>
+	  <tr bgcolor="#000000">
+    <td><font size="1">{$permissions[j].user_name}</font></td>
+    <td width="175"><a href=submit.php?user_id={$permissions[j].user_id}&action=userdelete><font size="1">delete all user permissions</font></a></td></tr>
+{/if}
+
+{if $permissions[j].section_id != $cursect}
+	{assign var=cursect value=$permissions[j].section_id}	
+	<tr bgcolor="#333333">
+	<td><font size="1">&nbsp;&nbsp;&nbsp;{$permissions[j].section_name}</font></td>
+	<td><a href=submit.php?user_id={$permissions[j].user_id}&section_id={$permissions[j].section_id}&action=sectdelete><font size="1">delete
+	section permissions</font></a></td>
+	</tr>
+	{assign var=modtype value=0} 
+{/if}
+	
+{if $modtype == 0 && $permissions[j].module_id < 50}
+	<tr bgcolor="#999999"> 
+  <td><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$section_name} modules</font></td>
+		<td><a href=submit.php?user_id={$permissions[j].user_id}&module_id={$permissions[j].module_id}&section_id={$permissions[j].section_id}&action=sectmoddelete><font size="1">delete {$section_name} permissions</font></a></td>
+		</tr>
+	{assign var=modtype value=1} 
+{/if}
+	
+	
+{if $permissions[j].module_id > 49 && $modtype != 2}
+		<tr bgcolor="#999999">
+  <td><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config modules</font></td>
+		<td><a href=submit.php?user_id={$permissions[j].user_id}&section_id={$permissions[j].section_id}&action=configmoddelete><font size="1">delete config permissions</font></a></td>
+		</tr>
+	{assign var=modtype value=2}
+{/if}
+	
+<tr>
+  <td><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$permissions[j].module_name}</font></td>
+		<td><a href=submit.php?user_id={$permissions[j].user_id}&module_id={$permissions[j].module_id}&section_id={$permissions[j].section_id}&action=delete><font size="1">delete module permissions</font></a></td>
+		</tr>
+
+{if $smarty.section.j.last}</table>{/if}
+{/section}
+
+{include file="../../templates/footer.tpl.html"}

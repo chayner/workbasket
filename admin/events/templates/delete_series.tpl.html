@@ -1,0 +1,13 @@
+{include file="../../templates/header.tpl.html"} 
+
+{section name=i loop=$events}
+<p><div align=left><hr><b>{$events[i].title}</b>
+ 	  <p>{$events[i].bdate|date_format}</div></p>
+{/section}
+
+<p>Are you sure that you want to delete this series?
+
+<p><a href="{$admindir}/events/submit.php?id={$id}&action=series_delete">Yes, Delete this series?</a>
+<p><a href="{$admindir}/events/index.php?feedback=Delete%20Canceled.">No, Cancel my Delete</a>
+
+</table>

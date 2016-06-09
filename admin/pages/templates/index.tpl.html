@@ -1,0 +1,40 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p><b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+
+
+{if $orphan_files}
+<hr>
+<table width="100%">
+<tr align="center">
+	  <td><strong><font color="#FFCC00">The following files are in the /pages/ directory, but not in the page list.<br>
+      Click on a filename to add it to the list. </font></strong></td>
+  </tr>
+{section name=i loop=$orphan_files}
+	<tr align="center">
+  <td><a href="import.php?filename={$orphan_files[i].filename}">{$orphan_files[i].filename}</a></td></tr>
+{/section}
+
+</table>
+<hr>
+{/if}
+
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+<tr bgcolor="#000000">
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><font color="#FFFFFF"><strong>page title</strong></font></td>
+<td><font color="#FFFFFF"><strong>file name</strong></font></td>
+<td><font color="#FFFFFF"><strong>show</strong></font></td>
+</tr>
+
+{insert name=listChildren parent_id=0 depth=0 owner=$section_s}
+{if $orphan_db_files}
+<tr><td colspan="5" align="right"><strong><font size=1 color="#FFCC00">* file not present - click to create file</font></strong></td>
+</tr>
+{/if}
+</table>
+
+{include file="../../templates/footer.tpl.html"} 

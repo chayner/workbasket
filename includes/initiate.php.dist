@@ -1,0 +1,226 @@
+<?php
+//initiate.php
+
+define('SMARTY_DIR',$_SERVER['DOCUMENT_ROOT'].'/includes/smarty/libs/');
+require(SMARTY_DIR.'Smarty.class.php');
+$smarty = new Smarty;
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/includes/getid3/getid3.php');
+$getID3 = new getID3;
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/includes/cMimeType.php');
+$mimetype = new mimetype();
+
+// Database Information
+$sys_dbhost='localhost:/tmp/mysql5.sock';
+$sys_dbuser='';
+$sys_dbpasswd='';
+$sys_dbname='theworkbasket_workbasket';
+
+// Site Information
+global $admindir, $siteroot;
+$admindir = "/admin";
+$smarty->assign('admindir', $admindir);
+
+$siteroot = "http://www.theworkbasket.net";
+$smarty->assign('siteroot', $siteroot);
+
+// Connect to the database
+
+function sql_query ($query,$print=0) {
+	  global $sys_dbname;
+      $result = mysql($sys_dbname,$query) or die("SQL_QUERY error: ".mysql_error());
+      $return_array = array();
+
+      while ($row = mysql_fetch_array($result)) {
+            array_push($return_array, $row);
+      }
+
+      mysql_free_result($result);
+      return $return_array;
+}
+
+db_connect();
+
+//--------------------------------------------------------------------------------//
+// Site Configurations																  //
+//--------------------------------------------------------------------------------//
+
+global $configs;
+$config_query = sql_query("select * from config");
+$configs = $config_query;
+$smarty->assign('configs',$configs);
+
+// Overall Site Info
+global $sitename, $fromaddress, $multisection;
+
+	$sitename = $configs[0][sitename];
+	$smarty->assign('sitename', $sitename);
+
+	$fromaddress = $configs[0][fromaddress];
+	$smarty->assign('fromaddress', $fromaddress);
+
+	$multisection = $configs[0][multisection];
+	$smarty->assign('multisection', $multisection);
+
+// EVENT CONFIG
+global $eventseries;
+
+	$eventseries = $configs[0][eventseries];
+	$smarty->assign('eventseries', $eventseries);
+
+// PHOTO CONFIG
+global $photo_resize_width, $photo_resize_height, $photo_thumb_resize;
+
+	$photo_resize_width = $configs[0]['photo_resize_width'];
+	$photo_resize_height = $configs[0]['photo_resize_height'];
+	$smarty->assign('photo_resize_width', $photo_resize_width);
+	$smarty->assign('photo_resize_height', $photo_resize_height);
+
+	$photo_thumb_resize =  $configs[0]['photo_thumb_resize'];
+	$smarty->assign('photo_thumb_resize', $photo_thumb_resize);
+
+// IMAGE CONFIG
+global $img_resize_width, $img_resize_height, $img_thumb_resize_width, $img_thumb_resize_height;
+
+	$img_resize_width = $configs[0][img_resize_width];
+	$img_resize_height = $configs[0][img_resize_height];
+	$smarty->assign('img_resize_width', $img_resize_width);
+	$smarty->assign('img_resize_height', $img_resize_height);
+
+	// Only have one of the following lines uncommented:
+	$img_thumb_resize_width =  $configs[0][img_thumb_resize_width];
+	$img_thumb_resize_height = $configs[0][img_thumb_resize_height];
+	$smarty->assign('img_thumb_resize_width', $img_thumb_resize_width);
+	$smarty->assign('img_thumb_resize_height', $img_thumb_resize_height);
+
+
+// STORE CONFIG
+global $paypal_email, $store_address, $ship_usa, $ship_int, $ship_first;
+
+	$paypal_email = $configs[0][paypal_email];
+	$smarty->assign('paypal_email', $paypal_email);
+
+	// Address to send checks
+	$store_address = $configs[0][store_address];
+	$smarty->assign('store_address',$store_address);
+
+	// Amount for the first item
+	$ship_first = $configs[0][ship_first];
+	$smarty->assign('ship_first', $ship_first);
+
+	// Amount for each additional item
+	$ship_usa = $configs[0][ship_usa];
+	$ship_int = $configs[0][ship_int];
+	$smarty->assign('ship_usa', $ship_usa);
+	$smarty->assign('ship_int', $ship_int);
+
+
+// MEMBERS
+global $member_loc, $custom_txt, $member_pass;
+
+	$member_loc = $configs[0][memberloc];
+	$member_pass = $configs[0][memberpass];
+	$custom_txt[0] = $configs[0][member_cust1];
+	$custom_txt[1] = $configs[0][member_cust2];
+	$custom_txt[2] = $configs[0][member_cust3];
+	$custom_txt[3] = $configs[0][member_cust4];
+	$custom_txt[4] = $configs[0][member_cust5];
+	$custom_txt[5] = $configs[0][member_cust6];
+	$custom_txt[6] = $configs[0][member_cust7];
+
+	$smarty->assign('member_loc', $member_loc);
+	$smarty->assign('member_pass', $member_pass);
+	$smarty->assign('custom_txt', $custom_txt);
+
+//----------------------------------------------------------------------//
+// DO NOT EDIT BELOW THIS LINE											//
+//----------------------------------------------------------------------//
+function inAgent($agent) {
+   global $HTTP_USER_AGENT, $user_os, $user_browser;
+   $notAgent = strpos($HTTP_USER_AGENT,$agent) === false;
+   return !$notAgent;
+}
+
+global $user_browser;
+if ( inAgent('Mac')) {
+	$user_os = "mac";
+} elseif ( inAgent('Win')) {
+	$user_os = "win";
+} else {
+	$user_os = "other";
+}
+
+if ( inAgent('MSIE') ) {
+	$user_browser = "ie";
+} elseif ( inAgent('Safari') ) {
+   	$user_browser = 'safari';
+} elseif ( inAgent('Mozilla/4') ) {
+	$user_browser = 'ns';
+} elseif ( inAgent('Firefox')) {
+	$user_browser = 'firefox';
+} else {
+	$user_browser = "unknown";
+}
+
+$smarty->assign('user_os', $user_os);
+$smarty->assign('user_browser', $user_browser);
+
+
+function db_connect() {
+	global $sys_dbhost,$sys_dbuser,$sys_dbpasswd,$sys_dbname;
+	$conn = mysql_connect($sys_dbhost,$sys_dbuser,$sys_dbpasswd);
+	if (!$conn) {
+		echo mysql_error();
+	}
+	return $conn;
+}
+
+function db_query($qstring,$print=0) {
+	global $sys_dbname;
+	return @mysql($sys_dbname,$qstring);
+}
+
+function db_result($qhandle,$row,$field) {
+	return @mysql_result($qhandle,$row,$field);
+}
+
+function db_numfields($lhandle) {
+	return @mysql_numfields($lhandle);
+}
+
+function db_fieldname($lhandle,$fnumber) {
+           return @mysql_fieldname($lhandle,$fnumber);
+}
+
+function db_affected_rows($qhandle) {
+	return @mysql_affected_rows();
+}
+
+function db_fetch_array($qhandle) {
+	return @mysql_fetch_array($qhandle);
+}
+
+function db_insertid($qhandle) {
+	return @mysql_insert_id($qhandle);
+}
+
+function db_error() {
+	return "\n\n<P><B>".@mysql_error()."</B><P>\n\n";
+}
+
+function db_numrows($qhandle) {
+	// return only if qhandle exists, otherwise 0
+	if ($qhandle) {
+		return @mysql_numrows($qhandle);
+	} else {
+		return 0;
+	}
+}
+
+$smarty->assign('thispage', $PHP_SELF);
+$smarty->assign('today', date('Y-m-d',time()));
+$smarty->assign('id', $id);
+$smarty->assign('feedback', $feedback);
+
+?>

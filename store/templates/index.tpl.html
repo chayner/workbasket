@@ -1,0 +1,55 @@
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+
+oldImage='spacer.gif'
+function chng(newImage) { 
+	if (document.mainimage.src.indexOf(oldImage)!= -1) 
+		document.mainimage.src = newImage;
+	else 
+		document.mainimage.src = newImage;
+} 
+
+
+//-->
+</script>
+{/literal}
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tr><td colspan="2">
+{include file="cart.tpl.html"}
+</td></tr>
+  <tr> 
+    <td align="center" colspan="2">{section name=j loop=$children} 
+	{insert name=find_item cat=$children[j].id catname=$children[j].name}
+	{/section} 
+	  
+{if $children and $merchandise}
+  <tr><td colspan="2"><hr noshade color="#000000"></td></tr>
+{/if} 
+
+{section name=i loop=$merchandise}
+<tr valign="top"><td align="center"><a href="item_info.php?id={$merchandise[i].id}"><img src="/photos/merch_{$merchandise[i].id}.jpg" alt="{$merchandise[i].caption|aslash|lower}" width="125" border=0></a><br>
+</td><td>
+  <p><i><font size="1">Item ID: {$merchandise[i].id}<br>
+    </font></i><strong><font size="3">{$merchandise[i].name}</font></strong> <br>
+    <em><font size="2">{$merchandise[i].subname}</font></em>
+                      {if $merchandise[i].lprice != 0 || $merchandise[i].sprice != 0}
+	  <p><strong>List:</strong> <s>${$merchandise[i].lprice}</s><br>
+                          <strong>Sale:</strong> ${$merchandise[i].sprice}      
+						{/if}              
+      {if $merchandise[i].copyright}<p><i>&copy; {$merchandise[i].copyright}</i></p>{/if}
+	  <p><a href="item_info.php?id={$merchandise[i].id}">more info</a></p>
+      </td>
+  </tr>
+  <tr>
+  <td colspan="2"><hr noshade color="#000000">
+  </td>
+  </tr>
+  
+  {/section}
+</table>

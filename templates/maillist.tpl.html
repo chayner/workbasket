@@ -1,0 +1,88 @@
+<html><title>{$configs[0].sitename}</title>
+<link href="/main.css" rel="stylesheet" type="text/css">
+
+<body bgcolor="#000000" background="/images/background.jpg" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<form name="form1" method="post" action="{$thispage}">
+    <table width="350"  border="0" align="center" cellpadding="15" cellspacing="0">
+        <tr>
+          <td valign="middle" background="/images/maillist.gif">	
+		  
+	        <div align="center"><font color="#FF0000">{if $feedback} 
+		        <strong>{$feedback}</strong> 
+	{else} 
+		<strong>Join the mailing list!</strong>	{/if} 
+	
+            </font></div>
+	        <table width="100%" border="0" align="center" cellpadding="3" cellspacing="0" class="maillist">
+    <tr> 
+      <td><strong><font size="-1">First 
+        Name: </font></strong></td>
+      <td><font color="#FFFFFF" size="-1"> 
+        <input type="text" name="fname">
+        </font></td>
+    </tr>
+    <tr> 
+      <td><strong><font size="-1">Last 
+        Name:</font></strong></td>
+      <td><font color="#FFFFFF" size="-1"> 
+        <input type="text" name="lname">
+        </font></td>
+    </tr>
+    <tr> 
+      <td><strong><font size="-1">Email:        </font></strong></td>
+      <td><font color="#FFFFFF" size="-1"> 
+        <input type="text" name="email">
+        </font></td>
+    </tr>
+	
+    <tr>
+      <td><p><strong><font size="-1">Zip C</font></strong><strong><font size="-1">ode:</font></strong></p>
+        </td>
+      <td><font color="#FFFFFF" size="-1">
+      <input name="zip" type="text" id="zip">
+</font></td>
+    </tr>
+    <tr>
+      <td colspan="2"><hr></td>
+      </tr>
+    <tr> 
+      <td><strong><font size="-1">Mailing List:</font></strong></td>
+      <td><font size="-1">
+	  {if $dropdown[1].title}
+	      <select name=maillist_id>
+	        
+              
+		  {section name=i loop=$dropdown}
+			 
+          
+              
+	        <option value="{$dropdown[i].id}">{$dropdown[i].title}</option>
+	        
+              
+		  {/section}
+	   
+        
+	        </select>
+		{else}
+		<input type="hidden" name="maillist_id" value="{$dropdown[0].id}">
+		{$dropdown[0].title}
+		{/if}
+		</font></td>
+    </tr>
+    <tr align="center"> 
+      <td colspan="2">        <font size="-1">
+        <input name="action" type="radio" value="subscribe" checked>
+        subscribe 
+        <input type="radio" name="action" value="unsubscribe">
+        unsubscribe</font></td>
+    </tr>
+    <tr align="center"> 
+      <td colspan="2">        <input type="submit" name="Submit" value="Submit">      </td>
+    </tr>
+  </table></td>
+        </tr>
+  </table>
+
+</form>
+</body>
+</html>

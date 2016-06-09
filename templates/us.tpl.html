@@ -1,0 +1,13 @@
+{include file="header.tpl.html" page="us"} 
+
+{section name=i loop=$bio} 
+{if $bio[i].image_id}
+<p><img src="/photos/image_{$bio[i].image_id}.jpg" />
+<br />{$bio[i].caption}</p>
+{/if}
+
+<div style="font-size:18px; font-weight:bold">{$bio[i].title}</div>
+<p>{$bio[i].body}</p>
+{/section}
+
+{include file="footer.tpl.html" page="us"}

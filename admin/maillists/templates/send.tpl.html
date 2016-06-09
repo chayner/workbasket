@@ -1,0 +1,32 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name=email method=post action=preview.php>
+<table width=100% border=0 cellpadding=15 cellspacing=0 bordercolor=#000000>
+  <tr>
+    <td><table width=100% border=0 cellspacing=0 cellpadding=0>
+        <tr>
+          <td>Subject: <input type=text name=subject size=50 value="{$current_email.subject}">
+            <br>
+            From: {$maillist[0].email}</td>
+        </tr>
+        <tr>
+          	<td class=emailtext>
+				 <br>
+				 <textarea name="message" cols=60 rows=25>{$current_email.raw_message|stripslashes}</textarea>
+				<hr>
+				<p>
+
+				</p>
+				<input type=hidden name=action value=send>
+				<input type=hidden name=from value={$maillist[0].email}>
+				<input type=hidden name=list_id value={$maillist[0].id}>
+				<input type=submit name=submit value="Preview Message">
+      		</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</form>
+
+</table>

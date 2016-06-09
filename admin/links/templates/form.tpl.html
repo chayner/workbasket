@@ -1,0 +1,51 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name=admin_item method=post action="submit.php">
+  <table width=100% border=0 cellspacing=0 cellpadding=10>
+    <tr valign=top> 
+      <td>{$cur_mod.item|capitalize} Title:</td>
+      <td> <input type=text name=title size=35 value="{$links[0].title}"> </td>
+    </tr>
+    <tr valign=top> 
+      <td>Brief summary of the {$cur_mod.item|lower} (try to keep this pretty short):</td>
+      <td> <textarea name=summary cols=40 rows=5>{$links[0].summary}</textarea> </td>
+    </tr>
+    <tr valign=top> 
+      <td>URL of the {$cur_mod.item|capitalize}: <br>
+        <i><font size="-1">URL needs to include 'http://'</font></i></td>
+      <td>
+<input type=text name=url size=35 value="{$links[0].url}"> </td>
+    </tr>
+	
+	{if $cur_mod.imgs_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175">Assign image to {$cur_mod.item|lower}:
+		<p><img name=picture src="{if $links[0].image_id}/photos/image_{$links[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+		<td>{insert name=image_select module=$module cur_img=$links[0].image_id}</td>
+	</tr>
+	{/if}
+
+	{if $cur_mod.cat_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+		<td>{insert name=category_select module=$module cur_cat=$links[0].category}</td>
+	</tr>
+	{/if}
+
+    <tr align="center" valign=top> 
+      <td colspan="2"> 
+        <input type=hidden name=action value="{$action}">
+		<input type=hidden name=id value="{$links[0].id}"> 
+        <input type=submit name=Submit value='{$action} {$cur_mod.item|lower}'>
+      </td>
+    </tr>
+  </table>
+</form>
+
+</table>

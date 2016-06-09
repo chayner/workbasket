@@ -1,0 +1,60 @@
+{include file="../../templates/header.tpl.html"} 
+
+       
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+  <tr> 
+    <td colspan=3 bgcolor=#000000> <b>{$cur_mod.name|lower}</b> </td>
+	{if $section_loc || $cur_mod.cat_p}
+		<td align=right bgcolor="#000000">
+		{if $cur_mod.cat_p}
+			{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+		{else}
+			&nbsp;
+		{/if}
+		</td>
+	{/if}
+	
+  </tr>
+  {section name=i loop=$sections} 
+  <tr bgcolor=#999999> 
+    <td colspan=4><font color="#000000"><strong>{$sections[i].name}</strong></font></td>
+  <tr valign=top> 
+    <td width="5%" align="center"> <font size="1"><a href=edit.php?id={$sections[i].id}>edit</a></td>
+    <td><img src=/photos/section_{$sections[i].id}_thumb.jpg></td>
+    <td>
+	{if $sections[i].director}	  <span class=title>Director:</span><br>
+	  <font size="1">{$sections[i].director}</font><br>
+	{/if}
+    {if $sections[i].director_phone}
+		<span class="title">Contact Number:</span><br>
+   	  <font size="1">{$sections[i].director_phone}</font><br>
+	{/if}
+	{if $sections[i].director_email}
+		<span class="title">Contact Email:</span><br>
+	  <font size="1">{$sections[i].director_email}</font><br>
+	{/if}
+	{if $sections[i].description}
+		<hr><span class="title">Description: </span><br>
+	  <font size="1">{$sections[i].description}</font>
+	{/if}
+	{if $sections[i].link}
+      <hr> <span class="title">External Link:</span><br>
+        {$sections[i].link}<p>
+      {/if}
+	  &nbsp;
+	</td>
+	{if $cur_mod.cat_p}
+    <td width="25%"><strong>Category:</strong><br>
+				    <font size="1">{if $sections[i].category > 0}
+						{insert name=category_name modid=$module id=$sections[i].category}
+					{else} <i>No Category Assigned</i>
+					{/if}	</font> 
+      </td>
+	  {/if}
+  </tr>
+	{sectionelse}
+        <tr><td colspan=4><p>There are no items to display.</p></td></tr>
+	{/section}
+</table>
+
+{include file="../../templates/footer.tpl.html"}

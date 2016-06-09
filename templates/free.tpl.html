@@ -1,0 +1,33 @@
+{include file="header.tpl.html" page="free"} 
+
+
+<table width="100%" cellpadding="5" class="links_main_table" >
+  {section name=i loop=$downloads}
+	<tr>
+		
+		<td rowspan="2" align="center" valign="top">
+		{if $downloads[i].image_id}
+		<img src="/photos/image_{$downloads[i].image_id}.jpg" width="150">
+		{/if}
+		</td>
+		<td height="20" valign="top">
+			{if $downloads[i].title}
+				<strong class="links_main_title">{$downloads[i].title}</strong>
+			{/if}
+		</td>
+		<td align="right" rowspan="2" valign="top">
+		<p><strong><a href="/getfile?{$downloads[i].id}" {if $user_browser == "ie"}target="_blank"{/if}>download {$downloads[i].extension}</a></strong>
+		<br><em>{$downloads[i].sizestring}</em></p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+		{if $downloads[i].description|rtrim}
+			{$downloads[i].description|rtrim}<br>
+		{/if}
+		</td>
+	</tr> 
+	{/section}
+</table>
+	
+{include file="footer.tpl.html" page="downloads"}

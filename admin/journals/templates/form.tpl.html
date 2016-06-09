@@ -1,0 +1,62 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name=admin_item enctype="multipart/form-data" method=post action="submit.php">
+  <table width=100% border=0 cellspacing=0 cellpadding=10>
+  <tr valign=top>
+      <td>{$cur_mod.item|capitalize} Title:</td>
+    <td>
+      <input type=text name=title size=35 value="{$journals[0].title}">
+    </td>
+  </tr>
+  <tr valign=top>
+    <td>{$cur_mod.item|capitalize} Author:</td>
+    <td>
+      <input type=text name=author size=35 value="{$journals[0].author}">
+    </td>
+  </tr>
+  <tr valign=top>
+      <td>{$cur_mod.item|capitalize} Date:</td>
+    <td>
+      <input type=text name=date size=35 value="{$journals[0].date|date_format}">
+    </td>
+  </tr>
+  <tr valign=top>
+    <td>
+      <p>Body of the {$cur_mod.item|capitalize}:</p>
+    </td>
+    <td>
+      <textarea name="body" cols=40 rows=10>{$journals[0].body}</textarea>
+    </td>
+  </tr>
+  
+  	{if $cur_mod.imgs_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175">Assign image to {$cur_mod.item|lower}:
+		<p><img name=picture id=picture src="{if $journals[0].image_id}/photos/image_{$journals[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+		<td>{insert name=image_select module=$module cur_img=$journals[0].image_id}</td>
+	</tr>
+	{/if}
+  
+	{if $cur_mod.cat_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+		<td>{insert name=category_select module=$module cur_cat=$journals[0].category}</td>
+	</tr>
+	{/if}
+    <tr align="center" valign=top> 
+      <td colspan=2> 
+        <input type=hidden name=action value="{$action}">
+        <input type=hidden name=id value="{$id}">		
+	  <input type=submit name=Submit value="{$action} {$cur_mod.item|lower}">
+      </td>
+  </tr>
+</table>
+</form>
+
+</table>

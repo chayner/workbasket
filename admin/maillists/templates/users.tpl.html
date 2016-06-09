@@ -1,0 +1,66 @@
+{include file="../../templates/header.tpl.html"} 
+
+{literal}
+<script LANGUAGE="JavaScript">
+<!--
+// Nannette Thacker http://www.shiningstar.net
+function confirmSubmit()
+{
+var agree=confirm("Are you sure you wish to delete this user?");
+if (agree)
+	return true ;
+else
+	return false ;
+}
+// -->
+</script>
+{/literal}
+
+<table width=100% border=0 cellspacing=0 cellpadding=0>
+  				<tr> 
+    				<td valign=top><p><strong class=title>{$maillist[0].title}</strong><br>
+        				{$maillist[0].summary}</p>
+      					<p><em>From: {$maillist[0].email}</em></p></td>
+    				<td valign=top>{insert name=numUsers id=$maillist[0].id} Subscriptions</td>
+			  </tr>
+</table>
+	  		<p></p>		
+			<table width=100% class="content" cellspacing=0 cellpadding=5>
+			  <tr>
+				<td bgcolor=#000000><a href="{$thispage}?list_id={$id}&ord=lname">Last Name</a></td>
+				<td bgcolor=#000000><a href="{$thispage}?list_id={$id}&ord=fname">First Name</a></td>
+				<td bgcolor=#000000><a href="{$thispage}?list_id={$id}&ord=email">Email Address</a></td>
+				<td bgcolor=#000000><a href="{$thispage}?list_id={$id}&ord=zip">Zip Code</a></td>
+				<td bgcolor=#000000><a href="{$thispage}?list_id={$id}&ord=created_on">Joined</a></td>
+				<td bgcolor=#000000>&nbsp;</td>
+			  </tr>
+			  <form name=user_edit method=post action=submit.php>
+			  <tr>
+			  	<td><input name=lname type=text size="15"></td>
+			  	<td><input name=fname type=text size="15"></td>
+			  	<td><input name=email type=text size="25"></td>
+				<td><input name=zip type=text size="10"></td>
+				<td>&nbsp;</td>
+				<td><input name=list_id type=hidden value={$maillist[0].id}>
+					<input name=action type=hidden value="user_add">
+					<input name=submit value="Add User" type=submit></td>
+			  </tr>
+			  </form>
+		  
+			{section name=i loop=$users}
+			<tr>
+				<td><font size="1">{$users[i].lname}</font></td>
+				<td><font size="1">{$users[i].fname}</font></td>
+				<td><font size="1">{$users[i].email}</font></td>
+				<td><font size="1">{$users[i].zip}</font></td>
+				<td><font size="1">{$users[i].created_on|date_format:"%b %d, %Y"}</font></td>
+				<td><a href=submit.php?action=user_del&user_id={$users[i].id}&list_id={$maillist[0].id} onClick="return confirmSubmit()">remove</a></td>
+			  </tr>
+			 {/section}
+
+	</table>
+	<p>
+	<div align=center><a href=index.php>Return to {$cur_mod.name|capitalize} Admin Page</a></div>
+
+
+</table>

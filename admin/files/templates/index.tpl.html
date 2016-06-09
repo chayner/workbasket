@@ -1,0 +1,88 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center><a href=new.php><strong>add new {$cur_mod.item|lower}</strong></a></p>
+
+		<table width=100% class="content" cellspacing=0 cellpadding=5>
+			<tr>
+			  <td colspan={if $cur_mod.imgs_p}"4"{else}"3"{/if} bgcolor="#000000">
+			  <strong>{$cur_mod.name|lower}</strong>
+			  </td>
+				{if $cur_mod.cat_p}
+					<td align=right bgcolor="#000000">
+						{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+					</td>
+				{/if}
+			</tr>
+
+
+                 
+		{section name=i loop=$files}
+			<tr>
+			   
+    <td width=5% align=center valign=top> <a href="edit.php?id={$files[i].id}"><font size="1">edit</font></a><font size="1"><br>      
+        <a href="delete.php?id={$files[i].id}">delete</a> </font></td>
+    {if $cur_mod.imgs_p}<td>{if $files[i].image_id}<img src=/photos/image_{$files[i].image_id}_thumb.jpg>{else}&nbsp;{/if}</td>{/if}
+                
+    <td width=30% align=center valign=top>
+	{if $files[i].filename}<em>{$files[i].filename}</em>{/if}
+	{if $files[i].title}
+		<p><div class="title">{$files[i].title}</div></p>
+	{/if}
+	
+	{if $files[i].artist}
+	<p><em><i>{$files[i].artist}</i></em></p>
+	{/if}
+	
+	{if $files[i].album}
+	<p><em>{$files[i].album} 
+		  {if $files[i].track}
+			  (Track {$files[i].track})
+		  {/if}
+	  </em></p>
+	{/if}</td>
+    <td width="40%" valign=top> 
+      <p><i><strong>{if $files[i].filetype == "video/mpeg"}
+			  	MPEG Video
+			  {elseif $files[i].filetype == "audio/mpeg"}
+			  	MP3
+			  {elseif $files[i].filetype == "application/vnd.rn-realfiles"}
+			  	Real files
+			  {elseif $files[i].filetype == "video/quicktime"}
+			  	Quicktime
+			  {elseif $files[i].filetype == "video/avi"}
+			  	AVI Video
+			  {elseif $files[i].filetype == "video/x-ms-wmv"}
+			  	Windows files Video
+			  {elseif $files[i].filetype == "application/x-shockwave-flash"}
+			  	Macrofiles Flash
+			  {elseif $files[i].filetype == "application/pdf"}
+			  	Adobe Acrobat
+			  {else}
+			  	{$files[i].filetype}
+			  {/if}</strong></i>
+	  <p>{$files[i].caption}
+	  <p>{if $files[i].copyright}
+      
+	  <p><i>&copy; {$files[i].copyright}</i></p>
+                     {/if}
+              <p><a href="/files/{$files[i].filename}">Link to File</a></p>			  </td>
+				{if $cur_mod.cat_p}
+				<td width=25% valign="top">
+					<strong class="title">Category:</strong>
+					<br><font size="1">
+					{if $files[i].category > 0}
+						{insert name=category_name modid=$module id=$files[i].category}
+					{else}
+						<i>No Category Assigned</i>
+					{/if}
+					</font>
+				</td>
+				{/if}
+			</tr>
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+       
+	   </table>
+
+{include file="../../templates/footer.tpl.html"}

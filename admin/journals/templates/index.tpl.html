@@ -1,0 +1,50 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+        <table width=100% class="content" cellspacing=0 cellpadding=3>
+        <tr bgcolor="#000000">
+           <td colspan={if $cur_mod.imgs_p}"3"{else}"2"{/if}>
+              <b>{$cur_mod.name|lower}</b>
+           </td>
+			{if $cur_mod.cat_p}
+				<td align=right bgcolor="#000000">
+					{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+				</td>
+			{/if}
+        </tr>
+
+{section name=i loop=$journals}
+
+		<tr valign=top>
+                <td width=5% align=center>
+                    <p><font size=1><a href=edit.php?id={$journals[i].id}>edit</a></font>
+          <br><font size=1><a href=delete.php?id={$journals[i].id}>delete</a></font></p>          </td>
+                {if $cur_mod.imgs_p}<td>{if $journals[i].image_id}<img src=/photos/image_{$journals[i].image_id}_thumb.jpg>{else}&nbsp;{/if}</td>{/if}
+                <td>
+                    <p><b><font size=2 class="title">{$journals[i].title}</font></b>
+                    {if $journals[i].author}<br><font size=1><i>by {$journals[i].author}</i></font>{/if}
+                    <br><font size=1><i>({$journals[i].date})</i></font></p>
+                    <p><font size=2>{$journals[i].body|truncate:200}</font></p>
+                </td>
+				
+				{if $cur_mod.cat_p}
+				<td width=25% valign="top">
+					<strong class="title">Category:</strong>
+					<br><font size="1">
+					{if $journals[i].category > 0}
+						{insert name=category_name modid=$module id=$journals[i].category}
+					{else}
+						<i>No Category Assigned</i>
+					{/if}
+					</font>
+				</td>
+				{/if}
+			
+		  </tr>
+	{sectionelse}
+        <tr><td colspan=4><p>There are no items to display.</p></td></tr>
+	{/section}
+</table>
+
+{include file="../../templates/footer.tpl.html"}

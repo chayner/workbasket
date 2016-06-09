@@ -1,0 +1,25 @@
+{include file="header.tpl.html"} 
+
+<table cellspacing="10" cellpadding="0" width="100%">
+<tr>
+<td align="center" width="250" valign="top">
+	<div id="flashcontent">
+		This movie requires Flash Player 7. <a href="http://www.macromedia.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" title="Download FP7">Download Flash Player 7</a> to view SlideShowPro.
+	</div>
+							
+		<script type="text/javascript">
+		var myFlashObject = new FlashObject("/slideshow.swf", "slideshow", "450", "450", 7, "#f0f0f0");
+		myFlashObject.addVariable("initialURL", "{$param}");
+		myFlashObject.addParam("wmode", "transparent");
+		myFlashObject.write("flashcontent");	
+		</script>
+						
+</td>
+<td valign="top">
+{$news[0].body|utf8}
+</td>
+</tr>
+</table>
+  
+  
+{include file="footer.tpl.html"}

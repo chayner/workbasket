@@ -1,0 +1,63 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center><a href="new.php{if $cur_cat.id > 0}?cat={$cur_cat.id}{/if}"><strong>add a new {if $cur_cat.id > 0}{$cur_cat.name|lower}{/if} {$cur_mod.item|lower}</strong></a></p>
+<p align=center><font size="1"><a href="import.php"><strong>import multiple photos</strong></a><strong> | <a href="redo_thumbs.php?c={if $c}{$c}{else}0{/if}">rebuild thumbnails</a></strong></font></p>
+<table width=100% class="content" cellspacing=0 cellpadding=3>
+			<tr>
+			  <td bgcolor=#000000 colspan=3>
+			  <strong>{$cur_mod.name|lower} {if $cur_cat.id != -1} - {$cur_cat.name}{/if}</strong> 
+			  {if $cur_cat.id != -1}<a href="delcat.php?cat={$cur_cat.id}"><font color="#FFFFFF" size="1">(delete all photos in this category)</font></a>{/if}
+			  </td>
+			  {if $cur_mod.cat_p}
+				<td align=right bgcolor="#000000">
+					{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+				</td>
+			{/if}
+			</tr>
+
+
+                 
+		{section name=i loop=$photos}
+			<tr>
+			   <td width=5% align=center valign=top>
+			  <p><a href="edit.php?id={$photos[i].id}"><font size="1">edit</font></a><font size="1"><br>
+		      <a href="delete.php?id={$photos[i].id}">delete</a></font></p>			  </td>
+
+			   
+               <td width=20% align=center valign=top> <a href=edit.php?id={$photos[i].id}> 
+      <img src=/thumbs/{$photos[i].id}.jpg border="0"> </a> </td>
+               <td width=50% valign=top>
+			   		<p><i>Photo ID: {$photos[i].id}</i>
+					<br><i>({$photos[i].width} x {$photos[i].height})</i>
+					<p>{$photos[i].caption}				 <p>
+						 	
+  				    {if $photos[i].author}
+                       <i>{$photos[i].author}</i><br>
+                    {/if}
+
+  				    {if $photos[i].copyright}
+                       <i>&copy; {$photos[i].copyright}</i>
+					<p>
+                     {/if}
+
+			  </td>
+				
+			{if $cur_mod.cat_p}
+			<td width=25% valign="top">
+				<strong class="title">Category:</strong>
+				<br><font size="1">
+				{if $photos[i].category > 0}
+					{insert name=category_name modid=$module id=$photos[i].category}
+				{else}
+					<i>No Category Assigned</i>
+				{/if}
+				</font>
+			</td>
+			{/if}
+			</tr>
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+</table>
+
+{include file="../../templates/footer.tpl.html"}

@@ -1,0 +1,85 @@
+
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+
+oldImage='spacer.gif'
+function chng(newImage) { 
+	if (document.mainimage.src.indexOf(oldImage)!= -1) 
+		document.mainimage.src = newImage;
+	else 
+		document.mainimage.src = newImage;
+} 
+
+
+//-->
+</script>
+{/literal}
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tr><td colspan="2">
+
+{include file="cart.tpl.html"}
+
+</td></tr>
+  
+<tr valign="top"><td align="center"><a href="#" onClick="popUpMerch('{$merchandise[0].id}', {$merchandise[0].width}, {$merchandise[0].height});"><img src="/photos/merch_{$merchandise[0].id}.jpg" alt="{$merchandise[i].caption|aslash|lower}" width="200" border=0></a><br>
+</td><td>
+  <p><i><font size="1">Item ID: {$merchandise[0].id}<br>
+    </font></i><strong><font size="3">{$merchandise[0].name}</font></strong> <br>
+    <em><font size="2">{$merchandise[0].subname}</font></em>
+	<p>{$merchandise[0].description}</p>
+	{if $merchandise[0].lprice != 0 || $merchandise[0].sprice != 0}
+					  <p><strong>List:</strong> <s>${$merchandise[0].lprice}</s><br>
+                          <strong>Sale:</strong> ${$merchandise[0].sprice}      
+						{/if}                   
+      {if $merchandise[0].copyright}<p><i>&copy; {$merchandise[0].copyright}</i></p>
+      <p>{/if}</p>
+      {if $merchandise[0].lprice != 0 || $merchandise[0].sprice != 0}
+	  <p><form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	  
+	  {if $merchandise[0].sizes_p}
+	    <table>
+			<tr>
+			  <td><input type="hidden" name="on0" value="Size">Size</td>
+			  <td><select name="os0">
+			 	  {if $merchandise[0].size_small}<option value="Small">Small{/if}
+				  {if $merchandise[0].size_medium}<option value="Medium">Medium{/if}
+				  {if $merchandise[0].size_large}<option value="Large">Large{/if}
+				  {if $merchandise[0].size_xlarge}<option value="XLarge">X-Large{/if}
+				  {if $merchandise[0].size_xxlarge}<option value="XXLarge">XX-Large{/if}
+				  {if $merchandise[0].size_xxxlarge}<option value="XXXLarge">XXX-Large{/if}
+				  </select>
+			  </td>
+			</tr>
+	  </table>
+	{/if}
+	  
+	<input type="image" src="{$siteroot}/store/addtocart.gif" border="0" name="submit" alt="PayPal - Add to Cart">
+<input type="hidden" name="add" value="1">
+<input type="hidden" name="cmd" value="_cart">
+<input type="hidden" name="business" value="{$paypal_email}">
+<input type="hidden" name="item_name" value="{$merchandise[0].name}">
+<input type="hidden" name="amount" value="{$merchandise[0].sprice}">
+<!--<input type="hidden" name="page_style" value="Blaze314">-->
+<input type="hidden" name="no_shipping" value="0">
+<input type="hidden" name="shipping" value="{$ship_first}">
+<input type="hidden" name="shipping2" value="{$ship_usa}">
+<input type="hidden" name="return" value="{$siteroot}/store/thankyou.php">
+<input type="hidden" name="cancel_return" value="{$siteroot}/store/">
+<input type="hidden" name="notify_url" value="{$siteroot}/store/thankyou.php">
+<input type="hidden" name="no_note" value="1">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="lc" value="US">
+</form>
+</p>
+	  {/if}
+	  </td>
+
+  </tr>
+
+</table>

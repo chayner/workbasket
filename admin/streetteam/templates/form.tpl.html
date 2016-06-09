@@ -1,0 +1,116 @@
+{include file="../../templates/header.tpl.html"} 
+<form name=member_edit enctype="multipart/form-data" method="post" action="submit.php">
+  <table border=0 cellspacing=0 cellpadding=10>
+    {if $member_pass}
+	<tr valign="top">
+    	<td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+    	<td>User Name:</td>
+    	<td><input name=user_name type=text id="user_name" value="{$members[0].user_name}" size=50></td>
+    </tr>
+	<tr valign="top">
+		<td>Password:</td>
+		<td><p>{if $members[0].password}<em><strong>Password is  hidden</strong></em></p>
+		  <p><em><font size="1">  To change password, enter in new password below:</font></em><br>
+	      {/if}
+            <input type="text" name="password" id="password" value="" size="35">
+	        </p></td>
+	</tr>
+	<tr valign="top">
+    	<td colspan="2"><hr></td>
+    </tr>
+	{/if}
+	<tr valign=top> 
+      <td>First Name:</td>
+      <td> 
+        <input name=fname type=text id="fname" value="{$members[0].fname}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top>
+      <td>Last Name:</td>
+      <td>
+        <input name=lname type=text id="lname" value="{$members[0].lname}" size=35>
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>Address (line 1):</td>
+      <td> 
+        <input name=address1 type=text id="address1" value="{$members[0].address1}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>Address (line 2):</td>
+      <td> 
+        <input name=address2 type=text id="address2" value="{$members[0].address2}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>City:</td>
+      <td> 
+        <input name=city type=text id="city" value="{$members[0].city}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>State:</td>
+      <td> 
+        <input name=state type=text id="state" value="{$members[0].state}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>Zip:</td>
+      <td> 
+        <input name=zip type=text id="zip" value="{$members[0].zip}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td colspan="2"> 
+        <hr></td>
+    </tr>
+    <tr valign=top> 
+      <td>Phone:</td>
+      <td> 
+        <input name=phone type=text id="phone" value="{$members[0].phone}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>Fax:</td>
+      <td> 
+        <input name=fax type=text id="fax" value="{$members[0].fax}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>E-mail:</td>
+      <td> 
+        <input name=email type=text id="email" value="{$members[0].email}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>URL of the {$cur_mod.item|capitalize}: <br> <i><font size="-1">URL needs 
+        to include 'http://'</font></i></td>
+      <td> 
+        <input type=text name=url size=35 value="{$members[0].url}"> </td>
+    </tr>
+
+
+    <tr valign=top>
+      <td>School / Business:</td>
+      <td><input name="school" type=text id="school" value="{$members[0].school}" size=35></td>
+    </tr>
+	<tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+      <td>Biography:</td>
+      <td> 
+        <textarea name="bio" cols="40" rows="8" id="bio">{$members[0].bio}</textarea>
+</td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="top"><hr></td>
+    </tr>
+
+    <tr align="center" valign=top> 
+      <td colspan="2"> <input type=hidden name=action value="edit"> <input type=hidden name=id value="{$members[0].id}"> 
+        <input type=submit name=Submit value='{$action} {$cur_mod.item|lower}'> 
+      </td>
+    </tr>
+  </table>
+  <p align="left"></table>
+  </p>
+</form>
+

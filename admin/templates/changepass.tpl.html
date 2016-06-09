@@ -1,0 +1,26 @@
+{include file="header.tpl.html"} 
+
+Fill in this info and your password will be changed. 
+<P> 
+<FORM ACTION="{$thispage}" METHOD="POST">
+  <table border="0" cellpadding="10">
+    <tr> 
+      <td>User Name:</td>
+      <td><input type="TEXT" name="change_user_name" value="{$user_name}" size="10" maxlength="15"></td>
+    </tr>
+    <tr> 
+      <td>OLD Password:</td>
+      <td><input type="password" name="old_password" value="" size="10" maxlength="15"></td>
+    </tr>
+    <tr> 
+      <td>NEW Password:</td>
+      <td><input type="password" name="new_password1" value="" size="10" maxlength="15"></td>
+    </tr>
+    <tr> 
+      <td>NEW Password (confirm):</td>
+      <td><input type="password" name="new_password2" value="" size="10" maxlength="15"></td>
+    </tr>
+  </table>
+  <P>
+    <INPUT TYPE="SUBMIT" NAME="submit" VALUE="Change My Password">
+  </FORM>

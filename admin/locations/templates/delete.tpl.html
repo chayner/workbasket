@@ -1,0 +1,12 @@
+{include file="../../templates/header.tpl.html} 
+
+<div align=left><hr><b>{$locations[0].title}</b>
+ 	  <br>{$locations[0].city}  {$locations[0].state}
+	  <p><i>{$locations[0].url}</i></p><hr></div>
+
+<p>Are you sure that you want to delete this {$cur_mod.item|lower}?
+
+<p><a href="submit.php?id={$id}&action=delete">Yes, Delete this {$cur_mod.item|capitalize}</a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+
+</table>

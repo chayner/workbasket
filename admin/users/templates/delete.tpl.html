@@ -1,0 +1,11 @@
+{include file="../../templates/header.tpl.html" title="users" page="users"} 
+
+<div align=left><hr><b>{$users[0].user_name}</b>
+ 	  <p>{$users[0].real_name} ({$users[0].email})<hr></div>
+
+<p>Are you sure that you want to delete this users item?
+
+<p><a href="submit.php?id={$id}&action=delete">Yes, Delete this users Item</a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+
+</table>

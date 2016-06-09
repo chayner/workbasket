@@ -1,0 +1,68 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p><img src="/photos/{$id}.jpg"><br>
+
+<br>
+{$cur_mod.item|capitalize} Information:<br>
+  <form method="post" enctype="multipart/form-data"  action="submit.php">
+    	 <table>		
+			<tr>
+               <td width=60 valign=top>
+                   <p>
+                   Caption:
+               </td>
+               <td>
+                   <textarea name=caption cols=40 rows=4>{$photos[0].caption}</textarea>
+			   </td>
+           </tr>
+           <tr>
+               <td>
+                   Photographer:
+               </td>
+               <td>
+                   <input type=text name=author size=50 value="{$photos[0].author}"><br>
+               </td>
+           </tr>
+           <tr>
+               <td>
+                   Copyright Information:
+               </td>
+               <td>
+                   &copy; <input type=text name=copyright size=50 value="{$photos[0].copyright}"><br>
+               </td>
+           </tr>
+
+			{if $cur_mod.cat_p}
+			<tr>
+		     <td colspan="2" valign="top"><hr></td>
+	       </tr><tr valign="top"> 
+				<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+				<td>{if $cat}{insert name=category_select module=$module cur_cat=$cat}{else}{insert name=category_select module=$module cur_cat=$photos[0].category}{/if}</td>
+			</tr>
+			{/if}
+	       <tr>
+	         <td colspan="2"><hr></td>
+           </tr>
+	       <tr>
+		<td>
+			<p>Replace {$cur_mod.item|lower}
+			<br>with a new image:</p>
+			{if $message == 1}
+				<font size=2 color=red><b>The file you selected is not a valid {$cur_mod.item|lower}.</b></font><hr>
+			{/if}
+		</td>
+		<td>
+                    <input type="file" name="source_file">
+					<INPUT TYPE=hidden name=MAX_FILE_SIZE value=20000000><br><br>
+                    <input type=hidden name=photo_filename value="{$photos[0].filename}">
+					
+             </td>
+           </tr>
+	 </table>
+	 
+     <input type="hidden" name="id" value="{$id}">
+	 <input type="hidden" name="action" value="edit">
+     <input type="submit" value="Submit {$cur_mod.item|capitalize}">
+  </form>
+
+</table>

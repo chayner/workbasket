@@ -1,0 +1,69 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+        
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+  <tr> 
+    <td colspan=3 bgcolor=#000000> <b>{$cur_mod.name|lower}</b> </td>
+{if $cur_mod.cat_p}
+	<td align=right bgcolor="#000000">
+		{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+	</td>
+{/if}
+  </tr>
+  {section name=i loop=$locations} 
+  <tr valign=top> 
+    <td width=5% align=center> <p><font size=1><a href=edit.php?id={$locations[i].id}>edit</a><br>
+    <a href=delete.php?id={$locations[i].id}>delete</a></font></p>    </td>
+    <td width="30%"> <p><b><font size=-1 class="title">{$locations[i].title}</font></b></p>
+      <p> 	{if $locations[i].address1} 
+        		{$locations[i].address1} 
+			{/if} 
+			{if $locations[i].address2}
+				<br>{$locations[i].address2}
+			{/if} 
+        {if $locations[i].city} 
+			<br>{$locations[i].city}{if $locations[i].state}, {/if}
+		{/if}
+		{if $locations[i].state}
+			{$locations[i].state}
+		{/if}
+		{if $locations[i].zip} 
+        	{$locations[i].zip}
+		{/if} </font></i></p>    </td>
+    <td width="40%">
+		<p> 
+		{if $locations[i].phone} <strong class="title">Phone:</strong> <br>
+		<font size="1">{$locations[i].phone}</font><br>{/if}
+	    {if $locations[i].fax} <strong class="title">Fax:</strong><br>
+	    <font size="1">{$locations[i].fax}</font><br>{/if}
+	    {if $locations[i].email} <strong class="title">Email:</strong><br>
+	    <font size="1">{$locations[i].email}</font><br>{/if}
+		{if $locations[i].url && ($locations[i].url != "http://")} <strong class="title">URL:</strong> <i><a href="{$locations[i].url}" target='_blank'><font size="1">{$locations[i].url}</font></a></i>{/if}
+		</p>
+    {if $locations[i].notes}
+		
+      <p><strong class="title">Notes:</strong> {$locations[i].notes}</p>
+	{/if}	</td>
+    {if $cur_mod.cat_p}
+<td width=25% valign="top">
+	<strong class="title">Category:</strong>
+	<br><font size="1">
+	{if $locations[i].category > 0}
+		{insert name=category_name modid=$module id=$locations[i].category}
+	{else}
+		<i>No Category Assigned</i>
+	{/if}
+	</font>
+</td>
+{/if}
+  </tr>
+  {sectionelse} 
+  <tr> 
+    <td colspan=4><p>There are no items to display.</p></td>
+  </tr>
+  {/section} 
+</table>
+
+{include file="../../templates/footer.tpl.html"}

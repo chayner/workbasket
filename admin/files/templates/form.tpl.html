@@ -1,0 +1,162 @@
+{include file="../../templates/header.tpl.html" title="files" page="files"} 
+<p><strong class="title">{$files[0].filename}</strong><br>
+
+<br>Add Item Details:
+<form name="admin_item" enctype="multipart/form-data" method="post" action="submit.php">
+    	 
+  <table cellpadding="5">
+	<tr valign="top">
+      <td width="175">Filename:
+	  </td>
+      <td>
+	  {if $files[0].fileuploaded == "1"}
+	  	{$files[0].filename}
+		<input type="hidden" name="filename" value="{$files[0].filename}"> 
+	  {else}
+  	  	  <p>Select a file from the "/files" directory:
+			<br>{insert name=get_files cur_file=$files[0].filename}
+          
+		
+		    <input type="hidden" name="old_filename" value="{$files[0].filename}"> 
+			<input type="hidden" name="fileuploaded" value="{$files[0].fileuploaded}"> 
+          </p>
+	   {/if}
+	  </td>
+    </tr>
+        <tr valign="top">
+          <td>Filetype:</td>
+          <td>
+	  	  {if $files[0].fileuploaded == "0"}
+				<select name="filetype">
+					<option value="{$files[0].filetype}">
+						  {if $files[0].filetype == "video/mpeg"}
+							MPEG Video
+						  {elseif $files[0].filetype == "audio/mpeg"}
+							MP3
+						  {elseif $files[0].filetype == "application/vnd.rn-realfiles"}
+							Real files
+						  {elseif $files[0].filetype == "video/quicktime"}
+							Quicktime
+						  {elseif $files[0].filetype == "video/avi"}
+							AVI Video
+						  {elseif $files[0].filetype == "video/x-ms-wmv"}
+							Windows files Video
+						  {elseif $files[0].filetype == "application/x-shockwave-flash"}
+							Macrofiles Flash
+						  {elseif $files[0].filetype == "application/pdf"}
+					  		Adobe Acrobat
+			  			  {else}
+							{$files[0].filetype}
+						  {/if}
+					</option>
+					<option value="">------------</option>
+					<option value="">None</option>
+					<option value="audio/mpeg">MP3</option>
+					<option value="application/pdf">Acrobat PDF</option>
+					<option value="application/vnd.rn-realfiles">Real files</option>
+					<option value="video/mpeg">MPEG Video</option>							
+					<option value="video/quicktime">Quicktime Video</option>
+				</select>
+			{else}
+			  {if $files[0].filetype == "video/mpeg"}
+				MPEG Video
+			  {elseif $files[0].filetype == "audio/mpeg"}
+				MP3
+			  {elseif $files[0].filetype == "application/vnd.rn-realfiles"}
+				Real files
+			  {elseif $files[0].filetype == "video/quicktime"}
+				Quicktime
+			  {elseif $files[0].filetype == "video/avi"}
+				AVI Video
+			  {elseif $files[0].filetype == "video/x-ms-wmv"}
+				Windows files Video
+			  {elseif $files[0].filetype == "application/x-shockwave-flash"}
+				Macrofiles Flash
+			  {elseif $files[0].filetype == "application/pdf"}
+				Adobe Acrobat
+			  {else}
+				{$files[0].filetype}
+			  {/if}
+			  <input type="hidden" name="filetype" value="{$files[0].filetype}"> 
+			{/if}
+		  </td>
+        </tr>
+        <tr valign="top">
+          <td colspan="2"><hr></td>
+        </tr>
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Title: </td>
+      <td> 
+        <input type="text" name="title" size=50 value="{$files[0].title}">
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Description: </td>
+      <td> 
+        <textarea name="description" cols=40 rows=4>{$files[0].description}</textarea>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td width="175"> Copyright Information: </td>
+      <td> &copy; 
+        <input type=text name="copyright" size=50 value="{$files[0].copyright}">
+      </td>
+    </tr>
+	
+	{if $cur_mod.imgs_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175">Assign image to {$cur_mod.item|lower}:
+		<p><img name=picture src="{if $files[0].image_id}/photos/image_{$files[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+		<td>{insert name=image_select module=$module cur_img=$files[0].image_id}</td>
+	</tr>
+	{/if}
+	
+	{if $cur_mod.cat_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+		<td>{insert name=category_select module=$module cur_cat=$files[0].category}</td>
+	</tr>
+	{/if}
+	{if $files[0].fileuploaded == "1"}
+
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+	
+    <tr valign="top"> 
+      <td width="175"> 
+        <p>Update current item <br>
+          with a new file:</p>
+        {if $message == 1} <font size=2 color=red><b>The file you selected is 
+        not a valid {$cur_mod.item|lower}.</b></font> <hr>
+        {/if} </td>
+      <td> 
+        <input type=file name=uploadfile>
+        <br> <input type="hidden" name="old_filename" value="{$files[0].filename}"> 
+			<input type="hidden" name="fileuploaded" value="{$files[0].fileuploaded}"> 
+        
+			  <p>Or select a file from the "/files" directory:
+			<br>{insert name=get_files cur_file=$files[0].filename}
+          </p>
+
+	  </td>
+    </tr>
+		{/if}
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+  </table>
+     <input type="hidden" name="id" value="{$id}">
+	 <input type="hidden" name="action" value="edit">
+     <input type="submit" value="Submit {$cur_mod.item|capitalize}">
+</form>
+
+</table>

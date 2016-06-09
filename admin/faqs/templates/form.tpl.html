@@ -1,0 +1,51 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name=admin_item method=post action="submit.php">
+  <table width=100% border=0 cellspacing=0 cellpadding=10>
+    <tr valign=top>
+      <td>{$cur_mod.item|capitalize} Priority (1 is High):</td>
+      <td><input type=text name=priority size=10 value="{$faqs[0].priority}{$next_p}">
+      </td>
+    </tr>
+	<tr valign=top> 
+      <td>{$cur_mod.item|capitalize} Question:</td>
+      <td> <input name="question" type="text" id="question" value="{$faqs[0].question}" size="60"> </td>
+    </tr>
+    <tr valign=top> 
+      <td>{$cur_mod.item|capitalize}  Answer: </td>
+      <td> <textarea name=answer cols=40 rows=5 id="answer">{$faqs[0].answer}</textarea> </td>
+    </tr>
+
+	
+	{if $cur_mod.imgs_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175">Assign image to {$cur_mod.item|lower}:
+		<p><img name=picture src="{if $faqs[0].image_id}/photos/image_{$faqs[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+		<td>{insert name=image_select module=$module cur_img=$faqs[0].image_id}</td>
+	</tr>
+	{/if}
+
+	{if $cur_mod.cat_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+		<td>{insert name=category_select module=$module cur_cat=$faqs[0].category}</td>
+	</tr>
+	{/if}
+
+    <tr align="center" valign=top> 
+      <td colspan="2"> 
+        <input type=hidden name=action value="{$action}">
+		<input type=hidden name=id value="{$faqs[0].id}"> 
+        <input type=submit name=Submit value='{$action} {$cur_mod.item|lower}'>
+      </td>
+    </tr>
+  </table>
+</form>
+
+</table>

@@ -1,0 +1,76 @@
+{include file="../../templates/header.tpl.html"} 
+
+{if $mod == "album"}
+<p align=center>
+       <a href=?mod=event class="title">view <strong>event</strong> street teams</a></p>
+{else}
+<p align=center>
+       <a href=?mod=album class="title">view <strong>album</strong> street teams</a></p>
+{/if}
+<p align=center>
+       <a href=list.php><font size="1">see list of all street team members</font></a>
+	   <br><a href="csv.php?mod={$mod}"><font size="1">download Excel file of the {$mod} list</font></a>			   
+</p>
+        
+<table width=100% cellpadding=5 cellspacing=0 class="content">
+  <tr>
+    <td colspan=7 bgcolor=#000000><b>{$cur_mod.name|lower} - {$mod}s</b> </td>
+  </tr>
+
+  {section name=i loop=$events}
+    <tr bgcolor=#999999>
+    <td><strong><font size="1">{$mod}</font></strong></td>
+    <td><font size="1"><strong>member name</strong></font></td>
+    <td><strong><font size="1">address</font></strong></td>
+    <td><strong><font size="1">school/business</font></strong></td>
+    <td><strong><font size="1">ideas</font></strong></td>
+	  <td><strong><font size="1">comments</font></strong></td>
+	<td><strong><font size="1">action</font></strong></td>
+  </tr>
+  {insert name=get_team assign=members mod="$mod" id=$events[i].event_id} 
+  <tr>
+    <td rowspan="{$events[i].count}" valign="top"><p><font size="1"><strong>{$events[i].date|date_format}</strong></font>
+    <br>
+    <font size="2" class="title">{$events[i].title}</font></p>
+	<p><font size="1"><a href="mailto:{section name=l loop=$members}{$members[l].email};{/section}">email street team</a></font></p>
+	</td>
+
+	
+	
+	{section name=j loop=$members}
+			<td valign="top"><strong><font size="2" class="title">{$members[j].fname} {$members[j].lname}</font></strong>
+			<font size="1"><br><strong>Email:</strong> {$members[j].email}
+			<br><strong>Phone:</strong> {$members[j].phone}</font></td>
+			<td valign="top" ><font size="1">
+	  		{if $members[j].address1} 
+        		{$members[j].address1}<br> 
+			{/if} 
+			{if $members[j].address2}
+				{$members[j].address2}<br>
+			{/if} 
+        {if $members[j].city} 
+	        {$members[j].city}{if $members[j].state}, {/if}
+		{/if}
+		{if $members[j].state}
+			{$members[j].state}
+		{/if}
+		{if $members[j].zip} 
+			{$members[j].zip}
+		{/if}
+		</font>
+</td>
+			<td valign="top"><font size="1">{$members[j].school}</font>&nbsp;</td>
+			<td valign="top"><font size="1">{$members[j].ideas}</font>&nbsp;</td>
+			<td valign="top"><font size="1">{$members[i].comments}</font>&nbsp;</td>
+			<td valign="top"><p><font size="1"><a href="?action=remove&mod={$mod}&id={$events[i].id}&mid={$members[j].id}">remove<br> 
+	        from {$mod}</a></font></p>
+		    <p><font size="1"><a href="comment.php?id={$events[i].id}&mod={$mod}">add a comment</a> </font></p></td>
+  </tr>
+	{if !$smarty.section.j.last}
+	<tr>
+	{/if}
+	{/section}
+
+{/section}
+</table>
+{include file="../../templates/footer.tpl.html"}

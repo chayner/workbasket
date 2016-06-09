@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} !^www.theworkbasket.net$ [NC]
+RewriteRule ^(.*)$ http://www.theworkbasket.net/$1 [L,R=301]

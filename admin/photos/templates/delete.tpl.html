@@ -1,0 +1,11 @@
+{include file="../../templates/header.tpl.html"} 
+
+{section name=i loop=$photos}
+<div align=center><img src="/photos/{$photos[i].id}_thumb.jpg">
+ 	  <br>{$photos[i].caption}</div>
+{/section}
+<hr>
+<p>Are you sure that you want to delete this {$cur_mod.item|lower}?
+
+<p><a href="submit.php?id={$id}&cat={$cat}&action={$action}">Yes, {$delmessage}</a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>

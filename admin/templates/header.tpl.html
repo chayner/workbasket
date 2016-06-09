@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>{$sitename} administration : {$cur_mod.name}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+          eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+          if (restore) selObj.selectedIndex=0;
+}
+
+/*Combo Box Image Selector:
+By JavaScript Kit (www.javascriptkit.com)
+Over 200+ free JavaScript here!
+*/
+
+function showimage(){
+	var newimage, newimageid;
+	newimageid = document.admin_item.image.options[document.admin_item.image.selectedIndex].value;
+	if (newimageid > "0") {
+		newimage = "/photos/image_"+newimageid+"_thumb.jpg";
+		document.images.picture.src = newimage;
+	} else {
+		document.images.picture.src = "/images/spacer.gif";
+	}
+}
+//-->
+</script>
+
+<script type="text/javascript">
+   _editor_url = "/includes/htmlarea/";
+   _editor_lang = "en";
+</script>
+
+<script type="text/javascript" src="/includes/htmlarea/htmlarea.js"></script>
+
+<script type="text/javascript">
+
+      function initDocument() {
+		// var editor = new HTMLArea("body");
+		 //editor.generate();
+		 //HTMLArea.replaceAll();
+	}
+	HTMLArea.init();
+setTimeout(function() { HTMLArea.replaceAll() }, 500);
+
+//	HTMLArea.onload = initDocument;
+</script>
+
+<!-- <script type="text/javascript" src="/includes/fckeditor/fckeditor.js"></script>-->
+{/literal}
+
+<link href="/admin/includes/admin.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#CCCCCC">
+<table width="80%" align="center" cellpadding="5" bgcolor="#666666">
+    <tr>
+	  <td colspan="2" bgcolor="#000000" height="5"><font size="+1"><strong>{$sitename} administration</strong></font></tr>
+  {if $fullname}
+	<tr>
+      <td colspan="2">
+		  <table width="100%">
+			  <tr>
+				  <td>
+	<font color=#FFCC00><b>Welcome <font color=#FFFFFF>{$fullname}</font>!</b></font>
+					  <!-- <br>
+          <font size="-3"><font color="#FFCC00">Current {$section_item}:</font> 
+          {$cur_section_name} <font color="#666666">({$section_s})</font></font>	 -->
+        </td>
+			     <td align=right>
+				     <a href={$siteroot}{$admindir}/changepass.php>change password</a> | 
+				     <a href={$siteroot}{$admindir}/logout.php>logout</a>
+			     </td>
+			  </tr>
+	  </table></td>
+	</tr>
+	{/if}  
+	<tr>
+	  <td colspan="2" align="right" bgcolor="#FFCC00" height="3"><img src="/admin/includes/spacer.gif"></td></tr>
+	  <tr>
+		{if $fullname}
+		  <td rowspan="2" valign="top" bgcolor="#999999" width="20%">
+		  {if $global_mods}
+		  <table width="100%">
+		  	  <tr>
+				  <td><font size="1" color="#000000"><strong>global modules:</strong></font>
+				  </td>
+			  </tr>
+			  {section name=m loop=$global_mods}
+			  <tr><td><a href="{$admindir}{$global_mods[m].path}"><font size=1 {if $cur_mod.name == $global_mods[m].name}class="sidebarhighlight"{/if}>{$global_mods[m].name}</font></a></td>
+			  </tr>
+			  {/section}
+		</table><hr>
+		{/if}
+
+
+		
+  		<table cellpadding="3" width="100%"> 
+		{if $multisection}
+			  <tr>
+				  <td><font size="1" color="#000000"><strong>{$section_name}:</strong></font>
+				  </td>
+			  </tr>
+		{/if}
+			  </table>
+			  {section name=j loop=$section_list}
+			  
+					{if $section_list[j].id == $section_s}
+						<table width="100%"><tr><td colspan="2"><a href={$siteroot}{$admindir}/index.php?section={$section_list[j].id}>
+						<font class="sidebarhighlight">{if $multisection}{$section_list[j].name|lower}{else}{$sitename|lower}{/if}</font></a>
+						</td></tr>
+						{section name=l loop=$modules}
+						<tr><td width="15%">&nbsp;</td><td width="85%"><a href="{$admindir}{$modules[l].path}"><font size=1 {if $cur_mod.name == $modules[l].name}class="sidebarhighlight"{/if}>{$modules[l].name}</font></a></td></tr>
+						{/section}
+						</table>
+					{else}
+					<table><tr><td><a href={$siteroot}{$admindir}?section={$section_list[j].id}>
+					<font size="1" color="#333333">{$section_list[j].name|lower}</font></a></td></tr></table>{/if}
+					
+			  {/section}
+			  
+			  
+			  {if $config_list}
+			  <hr><table width="100%">
+			  <tr>
+			  <td><font size="1" color="#000000"><strong>config modules:</strong></font>
+			  </td>
+			  </tr>
+			  {section name=k loop=$config_list}
+					<tr><td><a href="{$admindir}{$config_list[k].path}">
+					<font size=1 color="#333333" {if $cur_mod.name == $config_list[k].name}class="sidebarhighlight"{/if}>{$config_list[k].name|lower}</font>
+					</a></td></tr>
+			  {/section}
+			  </table>		  
+			  {/if}
+			  </td>
+	{/if}
+	  <td width="80%" height="5" valign="middle" align="center"><font class="feedback">{$feedback|stripslashes}</font></td>
+	</tr>
+    <tr>
+      <td align="center" valign="top">

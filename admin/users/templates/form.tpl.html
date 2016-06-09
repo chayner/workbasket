@@ -1,0 +1,30 @@
+{include file="../../templates/header.tpl.html" title="users" page="users"} 
+
+<form name=users_iitem method=post action="submit.php">
+  <table border=0 cellspacing=0 cellpadding=10>
+    <tr valign=top> 
+      <td>Real Name:</td>
+      <td> <input name=real_name type=text id="real_name" value="{$users[0].real_name}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>User Name:</td>
+      <td> <input name=user_name type=text id="user_name" value="{$users[0].user_name}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>Email:</td>
+      <td><input name=email type=text id="email" value="{$users[0].email}" size=35></td>
+    </tr>
+	<tr valign="top">
+		<td>Password:</td>
+		<td><input name="password" type=text id="password" value="{$user[0].password}" size="35"></td>
+	</tr>
+    <tr align="center" valign=top> 
+      <td colspan=2> <input type=hidden name=action value="{$action}"> <input type=hidden name=id value="{$id}">	
+        <input type=submit name=Submit value="{$action} user"> </td>
+    </tr>
+  </table>
+</form>
+
+</table>

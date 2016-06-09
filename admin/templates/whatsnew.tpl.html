@@ -1,0 +1,12 @@
+<table>
+{section name=i loop=$tables}
+
+{if $tables[i].Update_time > $yesterday}
+<tr><td>
+
+{$tables[i].Name} - {$tables[i].Update_time|date_format:"%D %l:%M %p"}
+{insert name=get_table_info table=$tables[i].Name}
+</td></tr>
+{/if}
+{/section}
+</table>

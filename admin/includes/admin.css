@@ -1,0 +1,70 @@
+.archived {
+	font-size: 10px;
+
+}
+.content td {
+	border: 1px solid #000000;
+}
+.content {
+	border: 1px solid #000000;
+}
+.noborder {
+	border: 0px solid #999999;
+}
+.noborder td {
+	border: 0px solid #999999;
+}
+.maillist {
+	font-family: Verdana, "Times New Roman", Times, serif;
+	color: #E1D9C4;
+	font-size: 12px;
+}
+body {
+	font-family: Verdana, "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #FFFFFF;
+}
+td {
+	font-size: 12px;
+	color: #FFFFFF;
+}
+a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.title {
+	color: #FFCC33;
+	font-weight: bold;
+}
+
+.feedback {
+	color: #FFCC33;	
+	font-size: medium;
+	font-weight: bold;
+}
+
+.botlinks {
+	color: #333333;
+}
+
+.botlinks a {
+	color: #333333;
+}
+
+.completed {
+	background:#333333;
+}
+.sidebarhighlight {
+	font-size: 10px;
+	font-weight: bold;
+	color: #FFCC33;
+}
+textarea {
+	height: 15em;
+	width: 100%;
+}

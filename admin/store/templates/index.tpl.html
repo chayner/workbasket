@@ -1,0 +1,128 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form method="post" enctype="multipart/form-data"  action="submit.php">
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+			<tr>
+			  <td colspan="2" bgcolor=#000000>
+			  <strong>{$cur_mod.name|lower} settings</strong>
+			  </td>
+			</tr>
+
+
+			<tr>
+              <td valign="top"><font size="1">PayPal Address: </font></td>
+              <td><font size="1">
+              <input name="paypalemail" type="text" id="payl" value="{$config_query[0].paypal_email}" size="35">
+              </font></td>
+			</tr>
+			<tr>
+              <td valign="top"><font size="1">Store Address: </font></td>
+              <td><font size="1">
+                <textarea name="storeaddress" cols="30" rows="5" id="storeaddress">{$config_query[0].store_address}</textarea>
+              </font>
+			  </td>
+			</tr>
+			<tr>
+              <td valign="top"><font size="1">Price to ship first item: </font></td>
+              <td><font size="1">$
+              <input name="shipfirst" type="text" id="shipfirst" value="{$config_query[0].ship_first}">
+              </font></td>
+  </tr>
+			<tr>
+              <td valign="top"><font size="1">Additional Item (within USA) </font></td>
+              <td><font size="1">$
+              <input name="shipusa" type="text" id="shipusa" value="{$config_query[0].ship_usa}">
+              </font></td>
+  </tr>
+			<tr>
+              <td valign="top"><font size="1">Additional Item (Internationally) </font></td>
+              <td><font size="1">$
+              <input name="shipint" type="text" id="paypal_address5" value="{$config_query[0].ship_int}">
+              </font></td>
+  </tr>
+			<tr align="center">
+			  <td colspan="2" valign="top">
+			  <input type="hidden" name="action" value="settings">
+			  <input type="submit" name="Submit" value="update settings"></td>
+    </tr>
+	   </table>
+</form>
+
+<p align=center><a href=new.php><strong>add a new {$cur_mod.item|lower}</strong></a></p>
+
+		<table width=100% class="content" cellspacing=0 cellpadding=5>
+			<tr>
+			  <td bgcolor=#000000 colspan=3>
+			  <strong>{$cur_mod.name|lower}</strong>
+			  </td>
+			  {if $cur_mod.cat_p}
+				<td align=right bgcolor="#000000">
+					{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+				</td>
+			{/if}
+
+			</tr>
+
+
+                 
+		{section name=i loop=$merchandise}
+			<tr>
+			   <td width=5% align=center valign=top>
+					<a href="edit.php?id={$merchandise[i].id}"><font size="1">edit</font></a><font size="1"><br>
+                    <a href="delete.php?id={$merchandise[i].id}">delete</a></font>
+		      </td>
+
+			   
+    <td width=20% valign=top align=center> <a href=edit.php?id={$merchandise[i].id}> 
+      <img src=/photos/merch_{$merchandise[i].id}_thumb.jpg border="0"> </a> </td>
+               <td width=50% valign=top>		   		 <p><i><font size="1">Item ID: {$merchandise[i].id}<br>
+			   		</font></i><strong><font size="3">{$merchandise[i].name}</font></strong>
+                 <br>
+                    <em><font size="2">{$merchandise[i].subname}</font></em>                    
+			   		
+  				    {if $merchandise[i].description}
+                 <p><i>{$merchandise[i].description}</i></p>
+					{/if}
+					
+					<p><strong class="title">List:</strong> <s>${$merchandise[i].lprice}</s><br>
+				      <strong class="title">Sale:</strong> ${$merchandise[i].sprice}
+					</p>                    
+					<p>
+					{if $merchandise[i].noship == 1}<strong class="title">Free Shipping</strong>{/if}</p>
+					
+					{if $merchandise[i].sizes_p}
+				 <p><strong class="title">Sizes:</strong>
+						{if $merchandise[i].size_small}<br>Small{/if}
+						{if $merchandise[i].size_medium}<br>Medium{/if}
+						{if $merchandise[i].size_large}<br>Large{/if}
+						{if $merchandise[i].size_xlarge}<br>X-Large{/if}
+						{if $merchandise[i].size_xxlarge}<br>XX-Large{/if}
+						{if $merchandise[i].size_xxxlarge}<br>XXX-Large{/if}					
+				 </p>
+					{/if}
+  
+  				    {if $merchandise[i].copyright} <i>&copy; {$merchandise[i].copyright}</i>
+			     <p>
+                     {/if}
+
+			  </td>
+				{if $cur_mod.cat_p}
+					<td width=25% valign="top">
+						<strong class="title">Category:</strong>
+						<br><font size="1">
+						{if $merchandise[i].category > 0}
+							{insert name=category_name modid=$module id=$merchandise[i].category}
+						{else}
+							<i>No Category Assigned</i>
+						{/if}
+						</font>
+					</td>
+					{/if}
+			</tr>
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+       
+	   </table>
+
+{include file="../../templates/footer.tpl.html"}

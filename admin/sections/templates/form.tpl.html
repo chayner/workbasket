@@ -1,0 +1,126 @@
+{include file="../../templates/header.tpl.html"} 
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+
+function verify_id(index) {
+	if (index > 0) {
+		document.section_edit.director.value = "";
+		document.section_edit.director_phone.value = "";
+		document.section_edit.director_email.value = "";
+	} else {
+		document.section_edit.director.value = document.section_edit.dir_org.value;
+		document.section_edit.director_phone.value = document.section_edit.dirphone_org.value;
+		document.section_edit.director_email.value = document.section_edit.diremail_org.value;
+	}
+}
+</script>
+{/literal}
+
+<form name="section_edit" enctype="multipart/form-data" method="post" action="submit.php">
+  <table width=100% border=0 cellspacing=0 cellpadding=10>
+    <tr align="center" valign=top>
+      <td colspan="2"><img src="/photos/section_{$sections[0].id}_thumb.jpg"></td>
+    </tr>
+	<tr valign=top>
+      <td>{$cur_mod.item|capitalize} name:</td>
+      <td>
+        <input type=text name=name value="{$sections[0].name}" size=35>
+      </td>
+    </tr>
+	<tr valign=top>
+      <td>{$cur_mod.item|capitalize}'s description:</td>
+      <td>
+        <textarea name=description cols=35 rows=5>{$sections[0].description}</textarea>
+      </td>
+    </tr>
+	<tr valign=top>
+      <td>External link:</td>
+      <td>
+        <input type=text name=link value="{$sections[0].link}" size=35>
+      </td>
+    </tr>
+	<tr valign=top>
+	  <td colspan="2"><hr>      </td>
+    </tr>
+	<tr valign=top>
+	  <td>Either select a member from the list to the right 
+OR enter  contact information below. </td>
+	  <td>
+	  <select name="director_id" onChange="verify_id(this.form.director_id.value, {$members});">
+	    
+		{if $sections[0].director_id > 0}
+		<option value="{$director[0].id}">{$director[0].fname} {$director[0].lname}</option>
+		<option>---------------</option>
+		{/if}
+		
+		<option value="0">No member, enter contact info below</option>
+	  	<option>---------------</option>
+		{section name=i loop=$members}
+			<option value="{$members[i].id}">{$members[i].fname} {$members[i].lname}</option>
+		{/section}
+		
+		
+      </select></td>
+    </tr>
+	<tr valign=top>
+      <td>Director Name:</td>
+      <td>
+        <input type=text id=director name=director value="{$sections[0].director}" size=35>
+        <input type=hidden id=dir_org name=dir_org value="{$sections[0].director}">
+	  </td>
+    </tr>
+	<tr valign=top>
+      <td>Director phone:</td>
+      <td>
+        <input type=text name=director_phone value="{$sections[0].director_phone}" size=35>
+     	<input type=hidden id=dirphone_org name=dirphone_org value="{$sections[0].director_phone}">
+	  </td>
+    </tr>
+	<tr valign=top>
+      <td>Director email:</td>
+      <td>
+        <input type=text name=director_email value="{$sections[0].director_email}" size=35>
+		 <input type=hidden id=diremail_org name=diremail_org value="{$sections[0].director_email}" size=35>
+      </td>
+    </tr>
+	<tr>
+      <td colspan="2" valign="top"><hr></td>
+    </tr>
+    <tr>
+      <td valign="top">
+        <p>Logo:</p><p><img src="/photos/section_{$sections[0].id}_thumb.jpg" height="50"></p>
+        {if $message == 1} <font size=2 color=red><b>The file you selected is
+        not a valid {$cur_mod.item|lower}.</b></font>
+        <hr>
+    {/if} </td>
+      <td valign="top"> Add new image:<br>
+          <input type="file" name="source_file">
+          <INPUT TYPE=hidden name=MAX_FILE_SIZE value=20000000>
+          <br>
+          <br>
+          <input name="rem_curimg" type="checkbox" id="rem_curimg2" value="1">
+    Check to remove current photo
+      </td>
+    </tr>
+	{if $cur_mod.cat_p}
+    <tr>
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr> 
+      <td>Parent:</td>
+      <td>{insert name=avail_parent_sections s_id=$sections[0].parent id=$sections[0].id}
+      </td>
+    </tr>
+		{/if}
+    <tr align="center" valign=top> 
+      <td colspan="2"> <input type=hidden name=action value="{$action}"> <input type=hidden name=id value="{$sections[0].id}"> 
+        <input type=submit name=Submit value='{$action} {$cur_mod.item|lower}'> 
+      </td>
+    </tr>
+
+  </table>
+  <p>&nbsp;</p>
+  <p align="left"></table>
+  </p>
+</form>
+

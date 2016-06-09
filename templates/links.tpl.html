@@ -1,0 +1,17 @@
+{include file="header.tpl.html" page="links"} 
+
+<p>{$blurb[0].body}</p>
+
+{section name=i loop=$link} 
+<b>{$link[i].category}</b>
+	<ul>
+	{section name=j loop=$link[i]}
+	{if !$smarty.section.j.last}
+	
+		<li><b><a href="{$link[i][j].url}">{$link[i][j].title}</a></b>
+		  {if $link[i][j].url}<br/><em>(<a href="{$link[i][j].url}" style="font-size=10 px;" target="_blank">{$link[i][j].url}</a>)</em>{/if}
+		  <p>{$link[i][j].summary}</p>
+	{/if}
+	{/section}
+	</ul>
+{/section} {include file="footer.tpl.html" page="links"}

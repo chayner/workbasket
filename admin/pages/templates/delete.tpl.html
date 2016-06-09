@@ -1,0 +1,19 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name="delete_form" action="submit.php">
+<div align=left><hr>
+<b>{$page[0].title}</b>
+<br>
+{$page[0].filename}
+<hr>{$page[0].description}</div>
+{if $file_p}
+<p><input name="delete_file" type="checkbox" value="1"> Check here to delete the file ({$page[0].filename}) as well.</p>
+<hr>{/if}
+
+<p>Are you sure that you want to delete this {$cur_mod.item|lower}?</p>
+<input type="hidden" name="id" value="{$id}">
+<input type="hidden" id="action" name="action" value="{$action}">
+<a href="#" onClick="delete_form.submit();">Yes, Delete this {$cur_mod.item|capitalize}</a>
+<br><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+</form>
+</table>

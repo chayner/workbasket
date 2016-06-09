@@ -1,0 +1,119 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p><img src="/photos/merch_{$id}.jpg"><br>
+
+<br>Add Item Information:<br>
+<form method="post" enctype="multipart/form-data"  action="submit.php">
+     <table>		
+			<tr>
+			  <td valign=top>Name of Item:</td>
+			  <td valign="top"><input name=name type=text id="name" value="{$merchandise[0].name}" size=50></td>
+		   </tr>
+			<tr>
+			  <td valign=top>Sub-name of Item:<br>
+			    <font size="1"><em>(for authors, second line of title, etc)</em></font> </td>
+			  <td valign="top"><input name=subname type=text id="subname" value="{$merchandise[0].subname}" size=50></td>
+		   </tr>
+	<tr>
+               <td width=60 valign=top>
+                   <p>
+                   Description:
+               </td>
+               <td valign="top">
+                   <textarea name=description cols=40 rows=10 id="description">{$merchandise[0].description}</textarea>
+                   <br>
+               </td>
+           </tr>
+		   <tr>
+               <td valign="top">
+                   Copyright Information:
+</td>
+               <td valign="top">
+                   &copy; <input type=text name=copyright size=50 value="{$merchandise[0].copyright}">
+               </td>
+           </tr>
+		   <tr><td colspan="2"><hr></td></tr>
+		    
+           <tr>
+               <td valign="top">
+                   List Price:</td>
+               <td valign="top">
+                   $
+                   <input name=lprice type=text id="lprice" value="{$merchandise[0].lprice}" size=15></td>
+           </tr>
+           <tr>
+             <td valign="top">Selling Price: </td>
+             <td valign="top">$
+             <input name=sprice type=text id="sprice" value="{$merchandise[0].sprice}" size=15></td>
+           </tr>
+           <tr>
+             <td valign="top">Free Shiping?</td>
+             <td valign="top"><input name=noship type=radio id="noship" value="1" {if $merchandise[0].noship}checked{/if}> Yes
+			 				  <input name="noship" type="radio" value="0" {if !$merchandise[0].noship}checked{/if}> No</td>
+           </tr>		   
+		   
+          
+			<tr>
+				 <td colspan="2" valign="top"><hr></td>
+		   </tr>
+		   <tr>
+		   <td valign="top">Is this item require sizes?</td>
+		   <td valign="top"><input name="sizes_p" type="radio" value="1" {if $merchandise[0].sizes_p}checked{/if}>
+		     Yes 
+	         <input name="sizes_p" type="radio" value="0" {if !$merchandise[0].sizes_p}checked{/if}>
+	         No</td>
+		   </tr>
+		   <tr>
+		     <td valign="top">If so, what sizes?</td>
+		     <td valign="top"><input name="size_small" type="checkbox" id="size_small" value="1" {if $merchandise[0].size_small}checked{/if}>
+	         Small 
+	         <input type="checkbox" name="size_medium" value="1" {if $merchandise[0].size_medium}checked{/if}>
+	         Medium 
+	         <input type="checkbox" name="size_large" value="1" {if $merchandise[0].size_large}checked{/if}>
+	         Large 
+	         <input type="checkbox" name="size_xlarge" value="1" {if $merchandise[0].size_xlarge}checked{/if}>
+	         X-Large 
+	         <input type="checkbox" name="size_xxlarge" value="1" {if $merchandise[0].size_xxlarge}checked{/if}>
+	         XX-Large 
+	         <input type="checkbox" name="size_xxxlarge" value="1" {if $merchandise[0].size_xxxlarge}checked{/if}>
+	         XXX-Large</td>
+       </tr>
+		   
+		{if $cur_mod.cat_p}		   
+		<tr>
+		     <td colspan="2" valign="top"><hr></td>
+	   </tr>
+		<tr valign="top"> 
+			<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+			<td>{insert name=category_select module=$module cur_cat=$merchandise[0].category}</td>
+		</tr>
+		{/if}
+	       <tr>
+	         <td colspan="2" valign="top"><hr></td>
+           </tr>
+	       <tr>
+		<td valign="top">
+			<p>Update  item's image:</p>
+			{if $message == 1}
+				<font size=2 color=red><b>The file you selected is not a valid {$cur_mod.item|lower}.</b></font><hr>
+			{/if}
+		</td>
+		<td valign="top">
+                    Add new image:<br>
+          <input type="file" name="source_file">
+					<INPUT TYPE=hidden name=MAX_FILE_SIZE value=20000000><br><br>
+					<input name="rem_curimg" type="checkbox" id="rem_curimg2" value="1">
+Check to remove current image from merchandise item<br>
+and replace with &quot;no image
+available&quot; image
+<input type=hidden name=merchandise_filename value="{$merchandise[0].filename}">
+             </td>
+           </tr>
+	 </table>
+     <input type="hidden" name="id" value="{$id}">
+	 <input type="hidden" name="action" value="edit">
+     <br>
+     <input type="submit" value="Submit {$cur_mod.item|capitalize}">
+</form>
+
+</table>

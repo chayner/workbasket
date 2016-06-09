@@ -1,0 +1,85 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center><a href=new.php><strong>add new {$cur_mod.item|lower}</strong></a></p>
+
+		<table width=100% class="content" cellspacing=0 cellpadding=5>
+			<tr>
+			  <td colspan={if $cur_mod.imgs_p}"4"{else}"3"{/if} bgcolor="#000000">
+			  <strong>{$cur_mod.name|lower}</strong>
+			  </td>
+			{if $cur_mod.cat_p}
+				<td align=right bgcolor="#000000">
+					{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+				</td>
+			{/if}
+			</tr>
+
+
+                 
+		{section name=i loop=$media}
+			<tr>
+			   
+    <td width=5% align=center valign=top> <font size="1"><a href="edit.php?id={$media[i].id}">edit</a><br>
+      <a href="delete.php?id={$media[i].id}">delete</a>                 </font></td>
+    {if $cur_mod.imgs_p}<td>{if $media[i].image_id}<img src=/photos/image_{$media[i].image_id}_thumb.jpg>{else}&nbsp;{/if}</td>{/if}
+    <td width=30% align=center valign=top>
+	{if $media[i].filename}<em>{$media[i].filename}</em>{/if}
+	
+	{if $media[i].title}
+		<p><span class="title">{$media[i].title}</span>
+	{/if}
+	{if $media[i].author}
+	<br><em><i>{$media[i].author}</i></em>
+	{/if}</p>
+</td>
+               
+    <td width="40%" valign=top> 
+      <p><i><strong>{if $media[i].filetype == "video/mpeg"}
+			  	MPEG Video
+			  {elseif $media[i].filetype == "audio/mpeg"}
+			  	MP3
+			  {elseif $media[i].filetype == "application/vnd.rn-realmedia"}
+			  	Real Media
+			  {elseif $media[i].filetype == "video/quicktime"}
+			  	Quicktime
+			  {elseif $media[i].filetype == "video/avi"}
+			  	AVI Video
+			  {elseif $media[i].filetype == "video/x-ms-wmv"}
+			  	Windows Media Video
+			  {elseif $media[i].filetype == "application/x-shockwave-flash"}
+			  	Macromedia Flash
+			  {elseif $media[i].filetype == "application/pdf"}
+			  	Adobe Acrobat
+			  {else}
+			  	{$media[i].filetype}
+			  {/if}</strong></i>
+	  <p>{$media[i].caption}
+	  <p>{if $media[i].words}Words by: {$media[i].words}{/if}<br>
+      {if $media[i].music}Music by: {$media[i].music}{/if} 
+	  <p> {if $media[i].copyright}
+      <p><i>&copy; {$media[i].copyright}</i></p>
+                     {/if}
+			
+				{if $media[i].lyrics}
+					<p><i>Lyrics Included</i></p>
+			  {/if}			  </td>
+				{if $cur_mod.cat_p}
+				<td width=25% valign="top">
+					<strong class="title">Category:</strong>
+					<br><font size="1">
+					{if $media[i].category > 0}
+						{insert name=category_name modid=$module id=$media[i].category}
+					{else}
+						<i>No Category Assigned</i>
+					{/if}
+					</font>
+				</td>
+				{/if}
+			</tr>
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+       
+	   </table>
+
+{include file="../../templates/footer.tpl.html"}

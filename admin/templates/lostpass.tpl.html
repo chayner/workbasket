@@ -1,0 +1,22 @@
+{include file="header.tpl.html"} 
+
+<h3>Reset Your Password</h3>
+	<P>
+	Quickly fill in this info and a new password will be emailed.
+	
+<P>
+<FORM ACTION="{$thispage}" METHOD="POST">
+  <table border="0" cellpadding="10">
+    <tr> 
+      <td>User Name:</td>
+      <td><input type="TEXT" name="user_name" value="" size="15" maxlength="15"></td>
+    </tr>
+    <tr>
+      <td>Email Address:</td>
+      <td><input type="TEXT" name="email" value="" size="30" maxlength="45"></td>
+    </tr>
+  </table>
+  <P>&nbsp; 
+  <P>
+	<INPUT TYPE="SUBMIT" NAME="submit" VALUE="Reset My Password">
+	</FORM>

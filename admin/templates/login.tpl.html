@@ -1,0 +1,17 @@
+{include file="header.tpl.html"} 
+
+	<P>
+	Enter your user name and password and we'll set a cookie so we know you're logged in.
+	<P>
+	<FORM ACTION="{$thispage}" METHOD="POST">
+	<B>User Name:</B><BR>
+	<INPUT TYPE="TEXT" NAME="user_name" VALUE="" SIZE="10" MAXLENGTH="15">
+	<P>
+	<B>Password:</B><BR>
+	<INPUT TYPE="password" NAME="password" VALUE="" SIZE="10" MAXLENGTH="15">
+	<P>
+	<INPUT TYPE="SUBMIT" NAME="submit" VALUE="Login">
+	</FORM>
+	<P>
+
+<span class="title">If you've forgotten your password, please fill out <a href=lostpass.php>this form</a> to get your password reset.</span>

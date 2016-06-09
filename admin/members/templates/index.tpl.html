@@ -1,0 +1,124 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+        
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+  <tr> 
+    <td colspan=3 bgcolor=#000000> <b>{$cur_mod.name|lower}</b> </td>
+	{if $member_loc || $cur_mod.cat_p}
+		<td align=right bgcolor="#000000">
+		{if $cur_mod.cat_p}
+			{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+		{else}
+			&nbsp;
+		{/if}
+		</td>
+	{/if}
+	
+  </tr>
+  {section name=i loop=$members} 
+  <tr valign=top> 
+    <td width=5% align=center rowspan="{$spanfill.1}"> <p><font size=-1><a href=edit.php?id={$members[i].id}><font size="1">edit</font></a><font size="1"><br>
+    </font></font><font size=1><a href=delete.php?id={$members[i].id}>delete</a></font></p>    </td>
+    <td width="20%" rowspan="{$spanfill.1}" align="center" valign="top"><p><font size="1"><b><font class="title">{$members[i].fname} {$members[i].lname}</font></b></font></p>
+	  <font size="1"><img src="/photos/member_{$members[i].id}_thumb.jpg"></font>
+	  </td>
+    <td rowspan="{$spanfill.0}">
+      <font size="1"><strong class="title">Contact:</strong>
+	  		{if $members[i].address1} 
+        		<br>{$members[i].address1} 
+			{/if} 
+			{if $members[i].address2}
+				<br>{$members[i].address2}
+			{/if} 
+        {if $members[i].city} 
+	        <br>{$members[i].city}{if $members[i].state}, {/if}
+	{/if}
+	{if $members[i].state}
+		{$members[i].state}
+	{/if}
+	{if $members[i].zip} 
+       	{$members[i].zip}
+{/if}<br>
+		{if $members[i].phone}<br><strong class="title">Phone:</strong> {$members[i].phone}{/if}
+		{if $members[i].fax}<br><strong class="title">Fax:</strong> {$members[i].fax}{/if}
+		{if $members[i].email}<br><strong class="title">Email:</strong> {$members[i].email}{/if}
+		{if $members[i].url != "http://" && $member[i].url}<br><strong class="title">URL:</strong><i><a href="{$members[i].url}" target='_blank'>{$members[i].url}</a></i>{/if}
+&nbsp;
+
+ <br>
+ 	  {if $members[i].custom1}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust1}: </strong>{$members[i].custom1}
+	  {/if}
+	  {if $members[i].custom2}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust2}: </strong>{$members[i].custom2}
+	  {/if}
+	  {if $members[i].custom3}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust3}: </strong>{$members[i].custom3}
+	  {/if}
+	  {if $members[i].custom4}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust4}: </strong>{$members[i].custom4}
+	  {/if}
+	  {if $members[i].custom5}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust5}: </strong>{$members[i].custom5}
+	  {/if}
+	  {if $members[i].custom6}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust6}: </strong>{$members[i].custom6}
+	  {/if}
+	  {if $members[i].custom7}
+	  <br>
+	  <strong class="title">{$configs[0].member_cust7}: </strong>{$members[i].custom7}
+	  {/if}
+	  </p>    
+	  </font>
+    </td>
+    
+	
+	{if $cur_mod.cat_p}
+	<td width=25% valign="top">
+		<font size="1"><strong class="title">Category:</strong>
+		<br>
+		{if $members[i].category > 0}
+			{insert name=category_name modid=$module id=$members[i].category}
+		{else} 
+			<i>No Category Assigned</i>
+    	{/if}
+		</font>
+	</td>
+	{/if}
+	
+  	{if $cur_mod.cat_p && $member_loc}
+  </tr>
+  	<tr valign=top>
+	{/if}
+	
+	{if $member_loc}
+	<td valign="top"><font size="1"><strong class="title">Locations:</strong>{insert name=location_list modid=$module member_id=$members[i].id}
+        <p><a href="locations.php?member_id={$members[i].id}"><em>modify {$cur_mod.item|lower} locations</em></a></p>
+	</font></td>
+	{/if}
+    
+  </tr>
+  <tr valign=top>
+    <td colspan="2"><font size="1"><strong class="title">Postions{if $multisection} / {$section_name|capitalize}{/if}:</strong>{insert name=section_list modid=$module member_id=$members[i].id}
+      <p><a href="sections.php?member_id={$members[i].id}"><em>modify {$cur_mod.item|lower} positions{if $multisection} / {$section_name}{/if}</em></a></p>
+    </font></td>
+  </tr>
+	
+	
+
+  {sectionelse} 
+  <tr> 
+    <td colspan=4><p>There are no items to display.</p></td>
+  </tr>
+  {/section} 
+</table>
+
+{include file="../../templates/footer.tpl.html"}

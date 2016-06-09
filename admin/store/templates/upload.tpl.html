@@ -1,0 +1,24 @@
+{include file="../../templates/header.tpl.html"} 
+<br>
+      <p><b>If you have an image for your new item, please browse for the JPEG
+          you wish to upload.<br>
+          Otherwise, just leave the field blank and click &quot;proceed&quot; below. </b></p>
+      <form method="post" enctype="multipart/form-data" action="submit.php" onSubmit="this.elements['submit'].disabled='disabled';">
+        <p>
+          <input type="file" name="source_file">
+        </p>
+        <p><em>(<font color=#FFCC00><strong>Due to constraints of our database, you
+              can only upload JPEG images.</strong></font> ) </em><br>
+          <br>
+                </p>
+        <p>
+  <INPUT TYPE=hidden name=MAX_FILE_SIZE value=20000000>
+  <font size=2 color=#FFCC00><b>Please be patient when uploading images, as it may take a little while to process.</b></font>
+  <p> 
+    <input type="hidden" name="action" value="upload">
+    <input type="submit" name="submit" value="proceed">
+	
+	
+</form>
+
+</table>

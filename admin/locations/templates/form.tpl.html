@@ -1,0 +1,108 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name=admin_item method=post action="submit.php">
+  <table width=100% border=0 cellspacing=0 cellpadding=10>
+    <tr valign=top> 
+      <td>{$cur_mod.item|capitalize} Title:</td>
+      <td> 
+        <input type=text name=title size=35 value="{$locations[0].title}"> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>Address (line 1):</td>
+      <td> 
+        <input name=address1 type=text id="address1" value="{$locations[0].address1}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>Address (line 2):</td>
+      <td> 
+        <input name=address2 type=text id="address2" value="{$locations[0].address2}" size=35> 
+      </td>
+    </tr>
+    <tr valign=top> 
+      <td>City:</td>
+      <td> 
+        <input name=city type=text id="city" value="{$locations[0].city}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>State:</td>
+      <td> 
+        <input name=state type=text id="state" value="{$locations[0].state}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>Zip:</td>
+      <td> 
+        <input name=zip type=text id="zip" value="{$locations[0].zip}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td colspan="2"> 
+        <hr></td>
+    </tr>
+    <tr valign=top> 
+      <td>Phone:</td>
+      <td> 
+        <input name=phone type=text id="phone" value="{$locations[0].phone}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>Fax:</td>
+      <td> 
+        <input name=fax type=text id="fax" value="{$locations[0].fax}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td colspan="2"> 
+        <hr></td>
+    </tr>
+    <tr valign=top> 
+      <td>E-mail:</td>
+      <td> 
+        <input name=email type=text id="email" value="{$locations[0].email}" size=35></td>
+    </tr>
+    <tr valign=top> 
+      <td>URL of the {$cur_mod.item|capitalize}: <br> <i><font size="-1">URL needs 
+        to include 'http://'</font></i></td>
+      <td> 
+        <input type=text name=url size=35 value="{$locations[0].url}"> </td>
+    </tr>
+    <tr valign="top"> 
+      <td colspan="2"> 
+        <hr></td>
+    </tr>
+    <tr valign="top"> 
+      <td>Notes:</td>
+      <td> 
+        <textarea name="notes" cols="40" rows="4" id="notes">{$locations[0].notes}</textarea></td>
+    </tr>
+
+	{if $cur_mod.imgs_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175">Assign image to {$cur_mod.item|lower}:
+		<p><img name=picture src="{if $locations[0].image_id}/photos/image_{$locations[0].image_id}_thumb.jpg{else}/images/spacer.gif{/if}"></p></td>
+		<td>{insert name=image_select module=$module cur_img=$locations[0].image_id}</td>
+	</tr>
+	{/if}
+
+
+	{if $cur_mod.cat_p}
+	<tr valign="top">
+	  <td colspan="2"><hr></td>
+	</tr>
+	<tr valign="top"> 
+		<td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+		<td>{insert name=category_select module=$module cur_cat=$locations[0].category}</td>
+	</tr>
+	{/if}
+
+
+    <tr align="center" valign=top> 
+      <td colspan="2"> <input type=hidden name=action value="{$action}"> <input type=hidden name=id value="{$locations[0].id}"> 
+        <input type=submit name=Submit value='{$action} {$cur_mod.item|lower}'> 
+      </td>
+    </tr>
+  </table>
+</form>
+
+</table>

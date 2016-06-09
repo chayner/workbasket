@@ -1,0 +1,53 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form action="submit.php" method="post">
+<table width=100% cellpadding=5 cellspacing=0 class="content">
+    <tr bgcolor=#999999>
+    <td><strong><font size="1">{$mod}</font></strong></td>
+    <td><font size="1"><strong>member name</strong></font></td>
+    <td><strong><font size="1">address</font></strong></td>
+    <td><strong><font size="1">school/business</font></strong></td>
+    <td><strong><font size="1">ideas</font></strong></td>
+  </tr>
+  <tr>
+   <td valign="top"><font size="1"><strong>{$events[0].date|date_format}</strong></font>
+    <br>
+    <font size="2" class="title">{$events[0].title}</font>
+	</td>
+			<td valign="top"><strong><font size="2" class="title">{$events[0].fname} {$events[0].lname}</font></strong>
+			<font size="1"><br><strong>Email:</strong> {$events[0].email}
+			<br><strong>Phone:</strong> {$events[0].phone}</font></td>
+			<td valign="top" ><font size="1">
+	  		{if $events[0].address1} 
+        		{$events[0].address1}<br> 
+			{/if} 
+			{if $events[0].address2}
+				{$events[0].address2}<br>
+			{/if} 
+        {if $events[0].city} 
+	        {$events[0].city}{if $events[0].state}, {/if}
+		{/if}
+		{if $events[0].state}
+			{$events[0].state}
+		{/if}
+		{if $events[0].zip} 
+			{$events[0].zip}
+		{/if}
+		</font>
+</td>
+			<td valign="top"><font size="1">{$events[0].school}</font>&nbsp;</td>
+			<td valign="top"><font size="1">{$events[0].ideas}</font>&nbsp;</td>
+	</tr>
+</table>
+<p><strong><font color="#FFCC00">add a comment:</font></strong></p>
+<p>
+	      <textarea name="comments" cols="30" rows="10">{$events[0].comments}</textarea>
+	  </p>
+	  <p><input type="hidden" name="id" value="{$id}">
+	  	<input type="hidden" name="action" value="comment">
+		<input type="hidden" name="mod" value="{$mod}">
+	    <input type="submit" name="Submit" value="submit comment">
+</p>
+</form>
+
+{include file="../../templates/footer.tpl.html"}

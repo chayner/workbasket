@@ -1,0 +1,53 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+        
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+  <tr> 
+    <td colspan=4 bgcolor=#000000> <b>{$cur_mod.name|lower}</b> </td>
+    {if $cur_mod.cat_p}
+		<td align=right bgcolor="#000000">
+			{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+		</td>
+	{/if}
+  </tr>
+  
+  {section name=i loop=$guestbook} 
+  <tr valign=top> 
+    <td width=5% align=center> <p><font size=-1><a href=edit.php?id={$guestbook[i].id}><font size="1">edit</font></a><font size="1"><br>
+    </font></font><font size=1><a href=delete.php?id={$guestbook[i].id}>delete</a></font></p>    </td>
+    <td width="15%" align="center"><font size="1">{$guestbook[i].date|date_format:"%A<br>%b %e, %Y<br>%l:%M:%S %p"}</font></td>
+	<td width="30%"> <p><b><font size=-1 class="title">{$guestbook[i].name}</font></b> {if $guestbook[i].email}<font size="1"><em>({$guestbook[i].email})</em></font>{/if}	
+		{if $guestbook[i].location}<br><font size="1"><em>{$guestbook[i].location}</em></font>{/if}	
+    <br>
+    {$guestbook[i].body}</td>
+	<td width="25%" {if !$guestbook[i].approved} bgcolor="#333333"{/if}>
+	{if $guestbook[i].approved}
+	<font class="title">Approved!</font><br>
+	<a href="submit.php?action=unapprove&id={$guestbook[i].id}">Click to remove approval</a>
+	{else}
+	<font class="title">Not yet approved.</font><br>
+	<a href="submit.php?action=approve&id={$guestbook[i].id}">Click to approve</a>{/if}
+	</td>
+    {if $cur_mod.cat_p}
+		<td width=25% valign="top">
+			<strong class="title">Category:</strong>
+			<br><font size="1">
+			{if $guestbook[i].category > 0}
+				{insert name=category_name modid=$module id=$guestbook[i].category}
+			{else}
+				<i>No Category Assigned</i>
+			{/if}
+			</font>
+		</td>
+	{/if}
+  </tr>
+  {sectionelse} 
+  <tr> 
+    <td colspan={if $cur_mod.cat_p}4{else}3{/if}><p>There are no items to display.</p></td>
+  </tr>
+  {/section} 
+</table>
+
+{include file="../../templates/footer.tpl.html"}

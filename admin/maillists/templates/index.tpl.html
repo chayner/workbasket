@@ -1,0 +1,48 @@
+{include file="../../templates/header.tpl.html"} 
+
+{if $cur_mod.add_del}<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>{/if}
+        <table width=100% class="content" cellspacing=0 cellpadding=5>
+        <tr>
+           <td bgcolor=#000000 colspan=6>
+              <b>{$cur_mod.name|lower}</b>
+           </td>
+        </tr>
+
+{section name=i loop=$maillists}
+
+		<tr valign=top>
+                <td width=5% align=center>
+                    <p><a href=edit.php?id={$maillists[i].id}><font size="1">edit</font></a>
+					{if $cur_mod.add_del}<br><font size=1><a href=delete.php?id={$maillists[i].id}>delete</a></font></p>{/if}</td>
+                <td>
+                    <p><b><font size=-1 class="title">{$maillists[i].title}</font></b>
+					<br><font size=1>{$maillists[i].summary}</font>
+					
+      <p><i>{$maillists[i].email}</i></p>
+                </td>
+				<td width=25% align=center valign=middle>
+					<font size="1">{insert name="numUsers" id=$maillists[i].id} Subscriptions </font>				  <p>
+               		  <font size="1"><a href=users.php?list_id={$maillists[i].id}>Edit Users</a>
+					  <br>
+					  <a href=csv.php?list_id={$maillists[i].id}>Export list to CSV file</a>
+					  </font>
+					<p>		
+				<font size="1">
+					{insert name="cur_email_p" id=$maillists[i].id}
+					{if $maillists[i].id == $current_email.list_id}
+					<p><strong>There is a message written but not yet sent!</strong></p>
+					<a href=send.php?list_id={$maillists[i].id}>Edit Message</a> | <a href=submit.php?action=cancel&list_id={$maillists[i].id}>Cancel Message</a> 
+					 {else}
+						<a href=send.php?list_id={$maillists[i].id}>Send New Email to List</a>
+                      {/if} </font>
+      	  </td>
+		  </tr>
+
+	{sectionelse}
+        <tr><td colspan="3"><p>There are no items to display.</p></td></tr>
+	{/section}
+
+</table>
+
+{include file="../../templates/footer.tpl.html"}

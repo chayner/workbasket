@@ -1,0 +1,102 @@
+{include file="../../templates/header.tpl.html" title="track" page="track"} 
+<form enctype="multipart/form-data" method="post" action="submit.php">
+    	 
+  <table cellpadding="5">
+	{if $album[0].id} 
+    <tr valign="top">
+      <td>Album:</td>
+      <td>
+
+		  	<strong>{$album[0].title}</strong>
+	  </td>
+    </tr>
+    <tr valign="top">
+      <td>Track #:</td>
+      <td><input name="track" type="text" id="track" value="{$track[0].track}" size=20></td>
+    </tr>
+	{/if}
+    <tr valign="top">
+      <td>
+        <p> Title: </td>
+      <td>
+        <input type="text" name="title" size=50 value="{$track[0].title}">
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td width="175"> Artist: </td>
+      <td> 
+        <input name=artist type=text id="artist" value="{$track[0].artist}" size=50>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top">
+      <td>Words by: </td>
+      <td><input name=words type=text id="artist32" value="{$track[0].words}" size=50></td>
+    </tr>
+    <tr valign="top">
+      <td>Music By:</td>
+      <td>
+        <input name=music type=text id="music" value="{$track[0].music}" size=50></td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Summary: </td>
+      <td> 
+        <textarea name=description cols=40 rows=4>{$track[0].description}</textarea>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="175">Lyrics:</td>
+      <td><textarea name=lyrics cols=40 rows=10 id="lyrics">{$track[0].lyrics}</textarea>
+    </tr>
+    <tr valign="top">
+      <td>Copyright:</td>
+      <td>&copy;<input name=copyright type=text id="copyright" value="{$track[0].copyright}" size=50></td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top"> 
+      <td width="175"> 
+        <p>Add a clip:</p>
+        {if $message == 1} <font size=2 color=red><b>The file you selected is 
+        not a valid {$cur_mod.item|lower}.</b></font><hr>
+        {/if}
+		</td>
+      <td>
+	  	<p>
+          <input type=file name=uploadfile>
+          <br>
+        </p>
+	  	<p>Or select a file from the "/tracks" directory:
+			<br>{insert name=get_tracks cur_file=$track[0].filename}
+          
+		
+		  <input type="hidden" name="old_filename" value="{$track[0].filename}"> 
+			<input type="hidden" name="fileuploaded" value="{$track[0].fileuploaded}"> 
+          </p></td>
+    </tr>
+    <tr valign="top">
+      <td>Allow download of this clip? <br>
+        <font size="1">(as opposed to just streaming)</font></td>
+      <td><input name="download_p" type="radio" value="1" {if $track[0].download_p}checked{/if}>
+        Yes
+          <input name="download_p" type="radio" value="0" {if !$track[0].download_p}checked{/if}>
+        No</td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+  </table>
+     <input type="hidden" name="id" value="{$id}">
+	 <input type="hidden" name="album" value="{$album[0].id}">
+	 <input type="hidden" name="action" value="track_{$action}">
+     <input type="submit" value="Submit track">
+</form>
+
+</table>

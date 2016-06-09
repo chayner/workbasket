@@ -1,0 +1,106 @@
+{include file="../../templates/header.tpl.html" title="albums" page="albums"} 
+
+<img src="/photos/album_{$album[0].id}.jpg">
+
+<form enctype="multipart/form-data" method="post" action="submit.php">
+    	 
+  <table cellpadding="5">
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Album Title: </td>
+      <td> 
+        <input type="text" name="title" size=50 value="{$album[0].title}">
+      </td>
+    </tr>
+    <tr valign="top">
+      <td> Artist: </td>
+      <td>
+        <input name=artist type=text id="artist" value="{$album[0].artist}" size=50>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+    <tr valign="top">
+      <td>Release Date: </td>
+      <td><input name=release_date type=text id="artist32" value="{$album[0].release_date}" size=20></td>
+    </tr>
+    <tr valign="top">
+      <td>Label:</td>
+      <td><input name="label" type="text" id="label" value="{$album[0].label}" size=50></td>
+    </tr>
+    <tr valign="top"> 
+      <td width=175> 
+        <p> Comments: </td>
+      <td> 
+        <textarea name=comment cols=40 rows=4 id="comment">{$album[0].comment}</textarea>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td width="175"> Copyright Information: </td>
+      <td> &copy; 
+        <input type=text name=copyright size=50 value="{$album[0].copyright}">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="top"><hr></td>
+    </tr>
+    <tr>
+      <td valign="top">
+        <p>Album Artwork:</p>
+        <p><img src="/photos/album_{$album[0].id}_thumb.jpg" height="50"></p>
+        {if $message == 1} <font size=2 color=red><b>The file you selected is
+        not a valid {$cur_mod.item|lower}.</b></font>
+        <hr>
+    {/if} </td>
+      <td valign="top"> Add new image:<br>
+          <input type="file" name="source_file">
+          <INPUT TYPE=hidden name=MAX_FILE_SIZE value=20000000>
+          <br>
+          <br>
+          <input name="rem_curimg" type="checkbox" id="rem_curimg2" value="1">
+    Check to remove current photo </td>
+    </tr>
+    <tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+	<tr valign="top">
+      <td>This item is in the store:</td>
+	  <td><select name="merch_id">
+	  		{if $album[0].merch_id}
+				<option value="{$album[0].merch_id}">{$album[0].merch_name}</option>
+			{/if}
+			<option value="">No item in the store</option>
+	  		{section name=i loop=$merch}
+				{if $merch[i].id != $album[0].merch_id}
+	    		<option value="{$merch[i].id}">{$merch[i].name}</option>
+				{/if}
+			{/section}
+	      </select></td>
+    </tr>
+	<tr valign="top">
+	  <td>Create street team for this album?</td>
+	  <td><input name="streetteam_p" type="radio" value="1" {if $album[0].streetteam_p == 1}checked{/if}>
+      Yes 
+      <input name="streetteam_p" type="radio" value="0" {if $album[0].streetteam_p == 0}checked{/if}>
+      No</td>
+    </tr>
+	<tr valign="top">
+      <td colspan="2"><hr></td>
+    </tr>
+	
+	{if $cur_mod.cat_p}
+	<tr valign="top"> 
+      <td width="175"> Item {$cur_mod.cat_name|capitalize}:</td>
+	  <td> 
+		{insert name=category_select module=$module cur_cat=$albums[0].category} 
+      </td>
+    </tr>
+    {/if}
+  </table>
+     <input type="hidden" name="id" value="{$id}">
+	 <input type="hidden" name="action" value="{$action}">
+     <input type="submit" value="Submit {$cur_mod.item|capitalize}">
+</form>
+
+</table>

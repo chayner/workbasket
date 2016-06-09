@@ -1,0 +1,62 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center><a href=new.php><strong>add a new {$cur_mod.item|lower}</strong></a></p>
+
+		<table width=100% class="content" cellspacing=0 cellpadding=3>
+			<tr>
+			  <td bgcolor=#000000 colspan=3>
+			  <strong>{$cur_mod.name|lower} {if $cur_cat.id} - {$cur_cat.name}{/if}</strong> 
+			  {if $cur_cat.id}<a href="delcat.php?cat={$cur_cat.id}"><font color="#FFFFFF" size="1">(delete all images in this category)</font></a>{/if}
+			  </td>
+			  {if $cur_mod.cat_p}
+				<td align=right bgcolor="#000000">
+					{insert name=category_dropdown cur_cat=$cur_cat.id module=$module}
+				</td>
+			{/if}
+			</tr>
+
+
+                 
+		{section name=i loop=$images}
+			<tr>
+			   <td width=5% align=center valign=top>
+			  <p><a href="edit.php?id={$images[i].id}"><font size="1">edit</font></a><font size="1"><br>
+		      <a href="delete.php?id={$images[i].id}">delete</a></font></p>			  </td>
+
+			   
+               <td width=20% align=center valign=top> <a href=edit.php?id={$images[i].id}> 
+      <img src=/photos/image_{$images[i].id}_thumb.jpg border="0"> </a> </td>
+               <td width=50% valign=top>
+			   		<p><i>image ID: {$images[i].id}</i>
+					<p>{$images[i].caption}				 <p>
+						 	
+  				    {if $images[i].author}
+                       <i>{$images[i].author}</i><br>
+                    {/if}
+
+  				    {if $images[i].copyright}
+                       <i>&copy; {$images[i].copyright}</i>
+					<p>
+                     {/if}
+
+			  </td>
+				
+			{if $cur_mod.cat_p}
+			<td width=25% valign="top">
+				<strong class="title">Category:</strong>
+				<br><font size="1">
+				{if $images[i].category > 0}
+					{insert name=category_name modid=$module id=$images[i].category}
+				{else}
+					<i>No Category Assigned</i>
+				{/if}
+				</font>
+			</td>
+			{/if}
+			</tr>
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+</table>
+
+{include file="../../templates/footer.tpl.html"}

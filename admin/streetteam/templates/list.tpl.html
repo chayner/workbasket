@@ -1,0 +1,44 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+		<p><a href=index.php>back to street team lists</a></p>
+<table width=100% cellpadding=5 cellspacing=0 class="content">
+  <tr>
+    <td colspan=6 bgcolor=#000000><b>{$cur_mod.name|lower}</b> </td>
+  </tr>
+  <tr bgcolor=#999999>
+    <td width="5%">&nbsp;</td>
+    <td><strong><font size="1"><a href="?ord={if $ord=="lname"}fname{else}lname{/if}">name</a></font></strong></td>
+    <td><strong><font size="1"><a href="?ord=phone">phone</a> / <a href="?ord=email">email</a> </font></strong>
+      <div align=center><strong><font size="1"> </font></strong></div></td>
+    <td><font size="1"><strong><a href="?ord=address1">address</a> / <a href="?ord=city">city</a> / <a href="?ord=state">state</a> / <a href="?ord=zip">zip</a></strong></font></td>
+    <td><strong><font size="1"><a href="?ord=school">school / biz</a></font></strong></td>
+	<td><strong><font size="1"><a href="?ord=teams">teams</a></font></strong></td>
+  </tr>
+  {section name=i loop=$members} 
+  
+  <tr valign="top">
+    <td width="5%" align="center"><font size="1"><a href="edit.php?id={$members[i].id}">edit</a></font><br>
+      <font size="1"><a href="delete.php?id={$members[i].id}">delete</a></font></td>
+    <td width="18%"><font size="1">{$members[i].fname} {$members[i].lname}</font></td>
+    <td width="30%"><font size="1">
+	{if $members[i].phone}<strong>Phone: </strong>{$members[i].phone}{/if}
+	{if $members[i].fax}<br>
+	<strong>Fax:</strong> {$members[i].fax}{/if}
+	{if $members[i].email}<br>
+	<strong>Email: </strong>{$members[i].email}{/if}
+	{if $members[i].url != "http://" && $member[i].url}<br>URL:<i><a href="{$members[i].url}" target='_blank'>{$members[i].url}</a></i>{/if}
+	</font>
+	</td>
+    <td width="25%"><font size="1">
+	{if $members[i].address1}{$members[i].address1}<br>{/if}
+	{if $members[i].address2}{$members[i].address2}<br>
+	{/if}
+	{if $members[i].city}{$members[i].city}{/if}{if $members[i].city && $members[i].state}, {/if}{if $members[i].state}{$members[i].state}{/if} {if $members[i].zip} {$members[i].zip}{/if}</font></td>
+    <td width="17%"><font size="1">{$members[i].school}</font></td>
+	<td width="5%" align="center"><font size="1">{$members[i].count}</font></td>
+  </tr>
+  {/section}
+</table>
+{include file="../../templates/footer.tpl.html"}

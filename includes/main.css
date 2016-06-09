@@ -1,0 +1,36 @@
+.sidebar {
+	color: #CC9933;
+	font-size: 13px;
+}
+.sidebar-cur {
+	color: #FFFFFF;
+	font-size: 13px;
+}
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	SCROLLBAR-FACE-COLOR: #666666;
+	SCROLLBAR-HIGHLIGHT-COLOR: #9999999;
+	SCROLLBAR-SHADOW-COLOR: #333333;
+	SCROLLBAR-3DLIGHT-COLOR: #666666; 
+	SCROLLBAR-ARROW-COLOR: #CCCCCC; 
+	SCROLLBAR-TRACK-COLOR: #666666;
+	SCROLLBAR-DARKSHADOW-COLOR: #333333;
+}
+td {
+	font-size: 12px;
+}
+a {
+	color: #CC9933;
+	text-decoration: none;
+}
+a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+.archives {
+	font-size: 10px;
+}
+.title {
+	color:#CC9933;
+}

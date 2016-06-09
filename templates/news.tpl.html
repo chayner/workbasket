@@ -1,0 +1,35 @@
+{include file="header.tpl.html" page="news"} 
+
+<table border="0" cellpadding="0" cellspacing="0" width=100%>
+  <tr><td colspan="2"> 
+  <div  class="archives">    
+   {if $news[1].date}
+	|
+	{section name=j loop=$news} 
+	 <a href="#{$news[j].date}" class="date">{$news[j].date|date_format}</a> |
+	{/section}
+	<hr>
+	{/if}
+  </div>
+  </td></tr>
+  <tr>
+    <td  valign="top"> 
+	
+		  {section name=i loop=$news}
+            <a name="#{$news[i].date|date_format:"%Y-%m-%d"}"></a>
+			<table><tr><td valign="top">{if $news[i].image_id}<img src="/photos/image_{$news[i].image_id}_thumb.jpg" align="left">{/if}</td>
+			<td valign="top"><a href="news.php?id={$news[i].id}"><span class="title">{$news[i].title}</span></a><br> 
+              <span class="date">Posted {$news[i].date|date_format}</span> <br> 
+              {$news[i].body|replace:".? ":". "}
+          </td></tr></table>
+		  {/section}	
+	</td>
+	<td valign="top" class="archives" width="100">
+	{include file="side_news.tpl.html"}
+	</td>
+  </tr>
+</table>
+{if $id}
+	<a href=news.php><b>Show more news items</b></a>
+{/if}
+{include file="footer.tpl.html" page="news"}

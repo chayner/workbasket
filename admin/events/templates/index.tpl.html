@@ -1,0 +1,113 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center> <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+
+{if $numexpired}
+	{if $expired == 1}
+		<a href={$phpself}>hide expired items</a>
+	{else}
+		<a href={$phpself}?expired=1>view expired items</a>	
+	{/if}
+{/if}
+		
+<table width=100% class="content" cellspacing=0 cellpadding=3>
+  	<tr> 
+    	<td bgcolor=#000000 colspan=3>
+			<b>{$cur_mod.name|lower}</b></td>
+		{if $cur_mod.cat_p}
+		<td align="right" bgcolor=#000000>{insert name=category_dropdown cur_cat=$cur_cat.id 
+      module=$module}</td>{/if}
+    </tr>
+
+
+	{section name=i loop=$events}	
+	
+		{if $events[i].bdate|date_format:"%Y-%m-%d" < $today}
+		  {assign var="expired_html" value="<font color=#C6362F><b><i> EXPIRED</i></b></font>"}
+		  {assign var="cell_format" value=" bgcolor=#333333"}
+		{else}
+		  {assign var="expired_html" value=""}
+		  {assign var="cell_format" value=""}
+		{/if}
+		
+		<tr valign='top'> 
+		  <td width='5%' align=center {$cell_format}><p><font size='1'> 
+		  	    <strong>event:</strong><br>
+			    <a href=edit.php?id={$events[i].id}>edit</a>
+			    <br>
+				  <a href=delete.php?id={$events[i].id}>delete</a>
+			    </font></p>
+		    {if $eventseries}
+				<p><font size="1"><strong>series:</strong><br>
+				{if $events[i].series_id == 0}<a href=new_series.php?id={$events[i].id}>create</a>
+				{else}<a href=edit_series.php?id={$events[i].series_id}>edit</a>
+				<br>
+				  <a href=delete_series.php?id={$events[i].series_id}>delete</a>
+			  {/if}</font></p>
+		  {/if}
+		  </td>
+			<td width='45%' {$cell_format}> 
+				<font class="title" size=-1><b>{$events[i].title}</b></font>
+				<br>
+				<font size='1'><i><b>
+		
+				{if $events[i].bdate}
+					{$events[i].bdate|date_format:"%A, %B %e, %Y"}
+				{/if}
+		
+				</b><br>
+				{if $events[i].btime == '00:00:00'}
+					TBA		
+				{elseif $events[i].btime}
+					{$events[i].btime|date_format:"%I:%M %p"}
+				{/if}
+				
+				</i></font><br>
+				{if $events[i].image_id}<p><img src=/photos/image_{$events[i].image_id}_thumb.jpg height="50"></p>{/if}
+				
+				{$expired_html}
+				{if $events[i].body}<p><font size='1'>{$events[i].body|strip_tags|truncate:80}</font></p>
+				{/if}
+				{if $events[i].url && ($events[i].url != "http://")}<p><font size='-1'><a href="{$events[i].url}" target="_blank"><em><font size="1">{$events[i].url}</font></em></a></font></p>
+				{/if}
+		  {if $events[i].cost}<p><strong>Cost:</strong> <font size="1">{$events[i].cost}</font></p>	  {/if}		 
+		  
+		   </td>
+			<td width="25%" {$cell_format}> 
+			
+				<p><b class="title">Location:</b> 
+				{if $events[i].loc_name || $events[i].loc_address || $events[i].loc_address2}
+					<font size="1">{if $events[i].loc_name}<br>{$events[i].loc_name}{/if}
+					{if $events[i].loc_address}<br>{$events[i].loc_address}{/if}
+					{if $events[i].loc_address2}<br>{$events[i].loc_address2}{/if}</font>
+				{else}
+					<br><i><font size="1">No location information provided</font></i>
+				{/if}	
+			 	</p>
+
+				<p><b class="title">Contact:</b>
+      			{if $events[i].contact_name || $events[i].contact_phone || $events[i].contact_email}
+			  		 <font size="1">{if $events[i].contact_name}<br>{$events[i].contact_name}{/if}
+					{if $events[i].contact_phone}<br>{$events[i].contact_phone}{/if}
+					{if $events[i].contact_email}<br>
+					{$events[i].contact_email}{/if}</font>
+					
+			    {else}
+					<br><i><font size="1">No contact information provided.</font></i>
+				{/if}
+				
+				 </p>		  </td>
+              {if $cur_mod.cat_p}
+			  <td width="25%" valign=top {$cell_format}> <strong class="title">{$cur_mod.cat_name|capitalize}:</strong><br>
+                <font size="1">{if $events[i].category > 0} {insert name=category_name id=$events[i].category} {else} <i>No {$cur_mod.cat_name|lower} assigned</i> {/if} </font>
+				</td>
+			{/if}
+		</tr>
+
+	{sectionelse}
+        <tr><td colspan="4"><p>There are no items to display.</p></td></tr>
+	{/section}
+</table>
+
+
+{include file="../../templates/footer.tpl.html"}

@@ -1,0 +1,35 @@
+{include file="../../templates/header.tpl.html"}
+
+<form method="post" action="submit.php" name="addlocation">
+<table width=625 border=0 cellspacing=0 cellpadding=5>
+  <tr>
+   <td width="325"><strong>Locations for {$member[0].fname} {$member[0].lname}:</strong></td>
+   <td width=200>
+   		{insert name=get_locations_dropdown}
+	</td>
+    <td width=100>
+      <input type=hidden name=action value='locadd'>
+	  <input type=hidden name=member_id value={$member_id}>
+      <input type=submit name=Submit value='Add Location'></td>
+  </tr>
+</table>
+</form>
+
+<!-- Display previous permissions -->
+
+<p>
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+   <tr bgcolor="#000000">
+    <td><font size="1">Location</font></td>
+    <td><font size="1">action</font></td>
+  </tr> {section name=i loop=$locations} 
+
+  <tr> 
+    <td width=150><font size=1>{$locations[i].title}</font></td>
+    <td width=75><font size=1><a href=submit.php?member_id={$member_id}&location_id={$locations[i].location_id}&action=locdel>delete</a></font></td>
+  </tr>
+  {/section} 
+</table>
+
+<p><a href="{$admindir}{$cur_mod.path}">back to {$cur_mod.name|lower}</a></p>
+{include file="../../templates/footer.tpl.html"}

@@ -1,0 +1,11 @@
+{include file="../../../templates/header.tpl.html"} 
+
+<div align=center><hr><img src="/photos/merch_{$merchandise[0].id}_thumb.jpg">
+ 	  <p>{$merchandise[0].caption}<hr></div>
+
+<p>Are you sure that you want to delete this {$cur_mod.item|lower}?
+
+<p><a href="submit.php?id={$id}&action=delete">Yes, Delete this {$cur_mod.item|capitalize}</a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+
+</table>

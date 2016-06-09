@@ -1,0 +1,42 @@
+{include file="../../templates/header.tpl.html" title="modules" page="modules"} 
+
+<p align=center>
+        <b><a href=new.php>add a new {$cur_mod.item}</a></b></p>
+        
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+  <tr> 
+    <td colspan=9 bgcolor=#000000> <b>modules</b> </td>
+  </tr>
+  <tr bgcolor=#999999> 
+    <td width=40> <div align=center><strong><font size="1">&nbsp;</font></strong></div></td>
+    <td> <div align=center><strong><font size="1"> <a href="{$thispage}?ord=id">id</a></font></strong></div></td>
+    <td><strong><font size="1"><a href="{$thispage}?ord=name">name</a></font></strong></td>
+    <td><strong><font size="1">description</font></strong></td>
+    <td><strong><font size="1">item name</font></strong></td>
+    <td><strong><font size="1">category</font></strong></td>
+    <td align="center"><font size="1"><strong>imgs</strong></font></td>
+    <td align="center"><strong><font size="1">a/d</font></strong></td>
+    <td align="center"><strong><font size="1">pub</font></strong></td>
+  </tr>
+  {section name=i loop=$module_list} 
+  <tr valign="top"> 
+    <td width=5%> <div align=center> 
+       <a href=edit.php?id={$module_list[i].id}><font size="1">edit</font></a><font size="1"><br>
+            <a href=delete.php?id={$module_list[i].id}>delete</a></font>
+        </div></td>
+    <td width=5% align=center><font size="1">{$module_list[i].id}</font></td>
+    <td width=10%><a href=edit.php?id={$module_list[i].id}><font size="1"><strong>{$module_list[i].name}</strong></font></a></td>
+    <td><font size="1"><strong class="title"><font size="1">Description:</font></strong> {$module_list[i].description}<br>
+    <strong class="title"><font size="1">Item: </font></strong>{$module_list[i].item}</font><br></td>
+    <td><font size="1"><strong class="title"><font size="1">Path: </font></strong>{$module_list[i].path}<br>
+        <strong class="title"><font size="1">Table: </font></strong>{$module_list[i].dbtable}
+		{if $configs[0].multisection}<br><strong class="title"><font size="1">Scope: </font></strong>{if $module_list[i].global_mod}global{else}specific{/if}</font>{/if}</td>
+    <td><font size="1">{if $module_list[i].cat_p == 1}<a href="{$thispage}?action=catno&id={$module_list[i].id}">{$module_list[i].cat_name}</a>{else}<a href="{$thispage}?action=catyes&id={$module_list[i].id}">n/a</a>{/if}</font></td>
+    <td align="center"><font size="1">{if $module_list[i].imgs_p == 0}<strong><a href="{$thispage}?action=imgsyes&id={$module_list[i].id}">No</a></strong>{else}<strong><a href="{$thispage}?action=imgsno&id={$module_list[i].id}">Yes</a></strong>{/if}</font></td>
+    <td align="center"><font size="1">{if $module_list[i].add_del == 0}<strong><a href="{$thispage}?action=adyes&id={$module_list[i].id}">No</a></strong>{else}<strong><a href="{$thispage}?action=adno&id={$module_list[i].id}">Yes</a></strong>{/if}</font></td>
+    <td align="center"><font size="1">{if $module_list[i].public == 0}<a href="{$thispage}?action=show&id={$module_list[i].id}">No</a>{else}<a href="{$thispage}?action=hide&id={$module_list[i].id}">Yes</a>{/if}</font></td>
+  </tr>
+  {/section} 
+</table>
+
+{include file="../../templates/footer.tpl.html" page="modules"}

@@ -1,0 +1,61 @@
+{include file="../../templates/header.tpl.html"} 
+
+{literal}
+<script LANGUAGE="JavaScript">
+<!--
+// Nannette Thacker http://www.shiningstar.net
+function confirmSubmit()
+{
+var agree=confirm("Deleting a category will cause all items within that category to become unassigned.  Are you sure you wish to delete this category?");
+if (agree)
+	return true ;
+else
+	return false ;
+}
+// -->
+</script>
+{/literal}
+
+<form>
+<select name="category" onChange="MM_jumpMenu('parent',this,0)">
+ 	{if !$module}
+	<option value="">Please choose a module.</option>
+	{else}
+	<option value="{$thispage}?cur_cat_mod={$cur_cat_mod}">{$cur_cat_mod_name}</option>
+	{/if}
+	<option value="">----------</option>
+	{section name=i loop=$modules}
+		<option value="{$thispage}?cur_cat_mod={$modules[i].id}">{$modules[i].name}</option>
+	{/section}		
+
+</select>
+
+</form>
+
+
+<form method=post action="submit.php">
+  <table width=600 border=0 cellspacing=0 cellpadding=5>
+  <tr>
+   <td width=150><strong>{$cur_mod.item|capitalize} Name: </strong><br><input name=cat_name size="45">
+   </td>
+   <td width=150>
+      <input type=hidden name=action value="add_cat">
+  	  <input type=hidden name="cur_cat_mod" value="{$cur_cat_mod}">
+      <input type=submit name=Submit value='Add {$cur_mod.item|capitalize}'>
+    </td>
+  </tr>
+</table></form>
+<p><a href="{$admindir}{$cur_cat_mod_path}">back to {$cur_cat_mod_name} admin</a></p>
+
+<!-- Existing Categories -->
+<p>
+<table width=100% class="content" cellspacing=0 cellpadding=5>
+<tr><td><font size="1">&nbsp;</font></td>
+<td><font size="1">&nbsp;</font></td>
+<td><font size="1"><strong>Name</strong></font></td>
+<td><p><font size="1"><strong>Order (if applicable)</strong></font></p>
+  </td>
+</tr>
+{insert name=listChildren parent_id=0 cur_cat_mod=$cur_cat_mod depth=0 owner=$section_s}
+
+</table>

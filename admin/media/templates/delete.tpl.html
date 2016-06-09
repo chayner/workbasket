@@ -1,0 +1,19 @@
+{include file="../../templates/header.tpl.html"} 
+
+<div align=center><hr><font class="title">{$media[0].title}</font>
+ 	  <br>{$media[0].filename}
+	  <p>{$media[0].caption}<hr></div>
+
+<form action="submit.php" method="post" enctype="multipart/form-data" name="form1">
+  <input type="checkbox" name="del_file" value="1" checked>
+  Delete {$media[0].filename} from /files as well. 
+<input type="hidden" name="id" value="{$id}">
+<input type="hidden" name="filename" value="{$media[0].filename}">
+<input type="hidden" name="fileuploaded" value="{$media[0].fileuploaded}">
+<input type="hidden" name="action" value="delete">
+<hr>
+<p>Are you sure that you want to delete this {$cur_mod.item|lower}?</p>
+<p><input name="submit" type="submit" id="submit" value="Delete this {$cur_mod.item|capitalize}">
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+</form>
+</table>

@@ -1,0 +1,15 @@
+{include file="../../templates/header.tpl.html"} 
+
+<p align=center>
+        <b><a href=new.php>add new {$cur_mod.item|lower}</a></b></p>
+   
+   <table width=100% class="content" cellspacing=0 cellpadding=5>
+<tr bgcolor="#000000">
+<td colspan=4 bgcolor=#000000> <b>{$cur_mod.name|lower}</b> </td>
+</tr>
+
+  {insert name=listChildren parent_id=0 depth=0 owner=$section_s}
+
+</table>
+
+{include file="../../templates/footer.tpl.html"}

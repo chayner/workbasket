@@ -1,0 +1,16 @@
+{include file="../../templates/header.tpl.html"} 
+<div align=center>
+  <hr>
+  <font class="title"><strong>{$album[0].title}</strong><br>
+  {if $track[0].track}Track #{$track[0].track} - {/if}{$track[0].title}</font>
+ 	  <br>
+ 	  {$track[0].artist}
+	  <p>{$track[0].caption}
+	  <hr>
+	  Are you sure that you want to delete this track?</div>
+
+<p><a href="submit.php?id={$id}&filename={$albums[0].filename}&fileuploaded={$albums[0].fileuploaded}&action=track_delete">Yes,
+    Delete this Track </a>
+<p><a href="index.php?feedback=Delete Canceled.">No, Cancel my Delete</a>
+
+</table>

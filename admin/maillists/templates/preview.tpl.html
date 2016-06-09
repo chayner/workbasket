@@ -1,0 +1,31 @@
+{include file="../../templates/header.tpl.html"} 
+
+
+This is what your email will look like:
+
+<table width=600 border=0 cellpadding=15 cellspacing=0 bordercolor=#000000>
+  <tr>
+    <td><table width=100% border=0 cellspacing=0 cellpadding=0>
+        <tr>
+          <td><hr>            <strong>Subject:</strong> {$preview.subject}
+              <br>
+              <strong>From:</strong> {$preview.from}
+          <hr>              {$preview.final}
+                <hr>
+              <p> </p>
+			  <form name=email method=post action=submit.php>
+			  <input type=hidden name=action value=send>
+              <input type=hidden name=from value="{$preview.from}">
+              <input type=hidden name=list_id value="{$preview.list_id}">
+			  <input type=hidden name=subject value="{$preview.subject}">
+			  <input type=hidden name=message value="{$preview.raw_message}">			 
+           
+			</form>
+			 <p align="center"><a href="submit.php?action=send&list_id={$preview.list_id}"><strong>Send this email</strong></a></p>
+			  <p align="center"><a href="send.php?list_id={$preview.list_id}"><strong>Make changes to this email</strong></a></p>
+		    <p align="center"><strong><a href="submit.php?action=cancel&list_id={$preview.list_id}">Cancel this email</a></strong>			        </p></td>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+{include file="../../templates/footer.tpl.html"} 

@@ -1,0 +1,40 @@
+<h3>Thank You For Your Order!</h3>
+ 
+										   
+<p>Thank you for your order with {$sitename}!
+
+{if $pt == 'c'}
+
+	{if $store_address}
+		<p><strong>Please send a check or money order to the following address:</strong>
+		<p>{$store_address}</p>	  
+	{else}
+		<p>You should recieve an email soon with information about where to send your check or money order.  If you do not recieve an email in the next 24 hours, please email customerservice@{$fromaddress}.</p>
+	{/if}
+	
+	<p>Once we recieve your check or money order, we will ship the
+		cross to the address below. We will be notifying you by email when we have
+		recieved your check or money order.
+  
+{else} </p>
+	<p>If the PayPal window did not appear please pay by clicking this link:</p>
+	<p><a href=https://www.paypal.com/xclick/business={$paypal_email}&item_name={$sitename|capitalize|replace:" ":"%20"}%20Order&item_number={$oid};&amount={$totalPayment}&return={$siteroot}%3Forder_id%3D{$oid}%26paytype%3Dpaypal&cancel_return={$siteroot}/store/cancel.php%3Forder_id%3D$oid&no_note=1&no_shipping=1&currency_code=USD target="_blank">
+	   <strong>Pay for my order through PayPal</strong></a></p>
+	<p>As soon as we recieve notification from PayPal that we have recieved your
+	  payment, we will ship your order to the address below.
+
+{/if}
+
+<p><p><strong>We will ship your order to:</strong></p>
+	  <table cellpadding=15><tr><td valign=top>
+	  {$cust[0].fname} {$cust[0].lname}
+	  <br>{$cust[0].address1}
+	  {if $cust[0].address2}
+	  	<br>{$cust[0].address2} 
+	  {/if}
+<br>{$cust[0].city},{$cust[0].state}  {$cust[0].zip}
+	  </td><td valign=top>
+	  {$cust[0].phone}
+	  <br>{$cust[0].email}
+	  </td></tr></table>
+	  

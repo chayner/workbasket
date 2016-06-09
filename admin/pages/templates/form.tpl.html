@@ -1,0 +1,48 @@
+{include file="../../templates/header.tpl.html"} 
+
+<form name="admin_item" method="post" action="submit.php">
+<table width="100%"  border="1" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr valign="top">
+    <td>Page ID: </td>
+    <td><input name="id" type="text" id="id" size="20" value="{$page[0].id}"></td>
+  </tr>
+  <tr valign="top">
+    <td>Page Filename:</td>
+    <td>/pages/
+      <input name="filename" type="text" id="filename" size="40" value="{$page[0].filename}"></td>
+  </tr>
+  <tr valign="top">
+    <td width="22%">Page Title: </td>
+    <td width="78%"><input name="title" type="text" id="title" size="40" value="{$page[0].title}">
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>Description:</td>
+    <td><textarea name="description" id="description">{$page[0].description}</textarea></td>
+  </tr>
+  <tr valign="top">
+    <td>Parent Page: </td>
+    <td>
+	{insert name=avail_parent_pages p_id=$page[0].parent id=$page[0].id owner=$section_s}
+	</td>
+  </tr>
+  <tr>
+  <td>Display in sidebar?</td><td><input name="display_p" type="radio" value="1" {if $page[0].display_p}checked{/if}>
+  Yes
+    <input name="display_p" type="radio" value="0" {if !$page[0].display_p}checked{/if}> 
+    No
+</td>
+  </tr>
+  <tr>
+  <td>
+  Content:
+  </td>
+  <td><textarea name="body" id="body">{$page[0].body}</textarea>
+  </td></tr>
+    
+</table>
+  <p align="center">
+  	<input type="hidden" name="action" value="{$action}">
+    <input type="submit" name="Submit" value="update page">
+  </p>
+</form>
